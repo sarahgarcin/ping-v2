@@ -1,0 +1,345 @@
+
+@font-face {
+    font-family: 'interval';
+    src: url('fonts/interval-webfont.eot');
+    src: url('fonts/interval-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/interval-webfont.woff') format('woff'),
+         url('fonts/interval-webfont.ttf') format('truetype'),
+         url('fonts/interval-webfont.svg#intervalbook') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'interval';
+    src: url('fonts/interval_bold-webfont.eot');
+    src: url('fonts/interval_bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/interval_bold-webfont.woff') format('woff'),
+         url('fonts/interval_bold-webfont.ttf') format('truetype'),
+         url('fonts/interval_bold-webfont.svg#intervalbold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'interval';
+    src: url('fonts/interval_slanted-webfont.eot');
+    src: url('fonts/interval_slanted-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/interval_slanted-webfont.woff') format('woff'),
+         url('fonts/interval_slanted-webfont.ttf') format('truetype'),
+         url('fonts/interval_slanted-webfont.svg#intervalslanted') format('svg');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'ume';
+    src: url('fonts/ume-p-mincho-webfont.eot');
+    src: url('fonts/ume-p-mincho-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/ume-p-mincho-webfont.woff') format('woff'),
+         url('fonts/ume-p-mincho-webfont.ttf') format('truetype'),
+         url('fonts/ume-p-mincho-webfont.svg#ume_p_minchoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body {
+    width: 98%;
+    height: 100%;
+    color:#000;
+    background: #C6C6C6;
+    font-size: 12px;
+    font-family: 'interval', monospace;
+    margin: 0 40px;
+    font-weight: bold;
+/*    overflow: hidden;*/
+
+}
+
+textarea {
+    font-family: 'interval', monospace;
+    font-size: 13px;
+    padding: 10px;
+    outline: none;
+    border: none;
+    font-weight: bold;
+}
+
+.header{
+  margin-top: 10px;
+}
+
+.accueil {
+    font-size: 15px;
+    font-family: 'ume', serif;
+    color: #1A22FA;
+    float: left;
+}
+
+.conf_title{
+    font-size: 15px;
+    font-family: 'ume', serif;
+    color:#545454;
+    letter-spacing: 1px;
+    padding-left: 30px;
+}
+
+.title {
+    float: right;
+    font-family:monospace;
+    font-size:0.3em;
+    color: #1A22FA;
+    margin-top: -20px;
+}
+
+#content {
+  width:100%; 
+  margin-top: 35px;
+  height:600px;
+}
+
+
+#content .pad textarea#pad_perso{
+  width:37%;
+  height:600px;
+  float:left; 
+  margin-left:0px; 
+  margin-top:0px;
+  border-top: 1px solid #1A22FA;
+  border-left: 1px solid #1A22FA;
+  border-bottom: 1px solid #1A22FA;
+}
+
+/*#content .pad .pad_title{
+  color:#1A22FA;
+  font-size: 13px;
+  font-family: "ume", helvetica, arial, sans-serif;
+  letter-spacing: 1px;
+}*/
+
+#content .pad p{
+  color:#000;
+  font-size: 13px;
+  font-family: "interval", helvetica, arial, sans-serif;
+  font-weight: bold;
+}
+
+#content .pad ul{
+  margin: 0;
+  padding-left: 0;
+}
+
+#content .pad ul li{
+  display: inline-block;
+  font-size: 13px;
+  font-family: "ume", helvetica, arial, sans-serif;
+  color:#1A22FA;
+  padding: 7px 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#content li.active{
+    background: #FFF;
+  border-top: 1px solid #1A22FA;
+  border-right: 1px solid #1A22FA;
+  border-left: 1px solid #1A22FA;
+}
+
+#content #previewer {
+  position:absolute; 
+  background:#FFF; 
+  width:35%;
+  height:580px;
+  float:left; 
+  margin-left:0px; 
+  margin-top:0px;
+  border-top: 1px solid #1A22FA;
+  border-left: 1px solid #1A22FA;
+  border-bottom: 1px solid #1A22FA;
+  display:none;
+  padding: 20px;
+  font-size: 13px;
+}
+
+/* MARKDOWN STYLED */
+
+#content #previewer blockquote{
+  font-style: italic;
+  color: #636363;
+}
+
+.common .filebutton {
+  float:left;
+  position: absolute;
+  margin-top: -30px;
+  color:#1A22FA;
+  font-size: 13px;
+  padding-left: 30px;
+  cursor: pointer;
+}
+
+.common #river {
+    overflow: scroll;
+    width:19%; 
+    height:620px; 
+    background:#fff; 
+    float:left; 
+    border-top: 1px dotted #1A22FA;
+    border-bottom: 1px dotted #1A22FA;
+    background-image: -webkit-gradient(
+  linear,
+  left top,
+  right top,
+  color-stop(0, #FFFFFF),
+  color-stop(1, #C6C6C6)
+);
+background-image: -o-linear-gradient(right, #FFFFFF 0%, #C6C6C6 100%);
+background-image: -moz-linear-gradient(right, #FFFFFF 0%, #C6C6C6 100%);
+background-image: -webkit-linear-gradient(right, #FFFFFF 0%, #C6C6C6 100%);
+background-image: -ms-linear-gradient(right, #FFFFFF 0%, #C6C6C6 100%);
+background-image: linear-gradient(to right, #FFFFFF 0%, #C6C6C6 100%);
+/*    margin-top:30px;*/
+}
+
+.common #river img{
+    width:240px;
+}
+
+.common #river p{
+    margin-left: 15px;
+    margin-bottom: 5px;
+    font-family: 'ume', serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+.common #river b{
+    font-family: 'ume', serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+#send-message {
+  position: relative;
+}
+
+#send-message>div {
+  text-align: center;
+}
+
+div.filebutton {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  display: inline-block;
+  text-decoration: none;
+  color: #000;
+  font-family: "ume", serif;
+  font-size: 2em;
+  text-align: center;
+  cursor: pointer;
+  line-height: 1;
+  letter-spacing: 1px;
+}
+
+div.filebutton {
+  line-height: 24px;
+  margin: 5px;
+  overflow: hidden;
+  padding: 2px 0;
+  width: 200px !important;
+  cursor: pointer;
+}
+
+.filebutton input#imagefile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+#visualisateur {
+  margin-top: -15px;
+  width:28%;
+  float: left;
+}
+
+#visualisateur #connected{
+  top:10px;
+  right:150px; 
+  position:absolute;
+  font-size: 13px;
+  font-family: "ume", serif;
+  color:#545454;
+  letter-spacing: 1px;
+}
+
+#visualisateur textarea{
+  width:100%; 
+  height:190px; 
+  margin-left: 60px;
+  background:#C6C6C6; 
+  border-bottom:1px solid rgba(26, 34, 250, 0.4); 
+  color:#545454;
+}
+
+
+#visualisateur #visu{
+  margin-top: -10px;
+  display:none;
+}
+
+#visualisateur #visu2{
+  display:none;
+}
+
+#visualisateur #visu3{
+  display:none;
+}
+
+#visualisateur #visu4{
+  display:none;
+}
+
+#visualisateur #visu5{
+  display:none;
+}
+
+#visualisateur #visu6{
+  display:none;
+}
+
+#visualisateur .pseudo{
+ font-size: 15px;
+ text-decoration: underline;
+ margin-left: 55px;
+ color:#545454;
+ font-family: "ume", serif;
+ letter-spacing: 1px;
+}
+
+#visualisateur .pseudo2{
+  font-size: 13px;
+ text-decoration: underline;
+ margin-left: 55px;
+ color:#545454;
+ font-family: "ume", serif;
+ letter-spacing: 1px;
+
+}
+
+#visualisateur .pseudo3{
+  font-size: 13px;
+ text-decoration: underline;
+  margin-left: 55px;
+ color:#545454;
+   font-family: "ume", serif;
+  letter-spacing: 1px;
+
+}
