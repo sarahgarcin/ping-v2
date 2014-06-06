@@ -41,6 +41,17 @@
          url('fonts/ume-p-mincho-webfont.svg#ume_p_minchoregular') format('svg');
     font-weight: normal;
     font-style: normal;
+}
+
+@font-face {
+    font-family: 'ume_balsa';
+    src: url('fonts/ume-p-gothic_balsa-webfont.eot');
+    src: url('fonts/ume-p-gothic_balsa-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/ume-p-gothic_balsa-webfont.woff') format('woff'),
+         url('fonts/ume-p-gothic_balsa-webfont.ttf') format('truetype'),
+         url('fonts/ume-p-gothic_balsa-webfont.svg#ume_p_gothic_balsaregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
 
 }
 
@@ -52,7 +63,7 @@ body {
     font-size: 12px;
     font-family: 'interval', monospace;
     margin: 0 40px;
-    font-weight: bold;
+    font-weight: normal;
 /*    overflow: hidden;*/
 
 }
@@ -63,7 +74,7 @@ textarea {
     padding: 10px;
     outline: none;
     border: none;
-    font-weight: bold;
+    font-weight: normal;
 }
 
 .header{
@@ -133,7 +144,7 @@ textarea {
 #content .pad ul li{
   display: inline-block;
   font-size: 13px;
-  font-family: "ume", helvetica, arial, sans-serif;
+  font-family: "ume_balsa", helvetica, arial, sans-serif;
   color:#1A22FA;
   padding: 7px 20px;
   cursor: pointer;
@@ -168,7 +179,57 @@ textarea {
 #content #previewer blockquote{
   font-style: italic;
   color: #636363;
+  font-size: 11px;
+/*-webkit-margin-before: 1em;
+-webkit-margin-after: 1em;
+-webkit-margin-start: 20px;
+-webkit-margin-end: 20px;*/
 }
+
+#content #previewer a{
+  text-decoration: none;
+  color:#1A22FA;
+}
+
+#content #previewer h1{
+  text-transform: uppercase;
+  font-size: 1.75em;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  -webkit-margin-after: 6px;
+}
+
+#content #previewer h2{
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  -webkit-margin-after: 6px;
+}
+
+#content #previewer h3{
+  text-transform: uppercase;
+  font-weight: normal;
+  letter-spacing: 0.05em;
+  -webkit-margin-after: 6px;
+}
+
+#content #previewer h4{
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: normal;
+  -webkit-margin-after: 6px;
+}
+
+#content #previewer p{
+  -webkit-margin-before: 6px;
+}
+
+#content #previewer li{
+  -webkit-margin-after: 12px;
+}
+
+
+/* RIVER */
 
 .common .filebutton {
   float:left;
@@ -236,7 +297,7 @@ div.filebutton {
   display: inline-block;
   text-decoration: none;
   color: #000;
-  font-family: "ume", serif;
+  font-family: "ume_balsa", serif;
   font-size: 2em;
   text-align: center;
   cursor: pointer;
@@ -289,30 +350,17 @@ div.filebutton {
   color:#545454;
 }
 
+#visualisateur #visu, #visu2, #visu3, #visu4, #visu5, #visu6 {
+  display:none;
+  font-size: 11px;
+  line-height: 17px;
+  letter-spacing: 0.05em;
+  word-spacing: 0.05em;
+
+}
 
 #visualisateur #visu{
   margin-top: -10px;
-  display:none;
-}
-
-#visualisateur #visu2{
-  display:none;
-}
-
-#visualisateur #visu3{
-  display:none;
-}
-
-#visualisateur #visu4{
-  display:none;
-}
-
-#visualisateur #visu5{
-  display:none;
-}
-
-#visualisateur #visu6{
-  display:none;
 }
 
 #visualisateur .pseudo{
@@ -335,6 +383,36 @@ div.filebutton {
 }
 
 #visualisateur .pseudo3{
+  font-size: 13px;
+ text-decoration: underline;
+  margin-left: 55px;
+ color:#545454;
+   font-family: "ume", serif;
+  letter-spacing: 1px;
+
+}
+
+#visualisateur .pseudo4{
+  font-size: 13px;
+ text-decoration: underline;
+ margin-left: 55px;
+ color:#545454;
+ font-family: "ume", serif;
+ letter-spacing: 1px;
+
+}
+
+#visualisateur .pseudo5{
+  font-size: 13px;
+ text-decoration: underline;
+  margin-left: 55px;
+ color:#545454;
+   font-family: "ume", serif;
+  letter-spacing: 1px;
+
+}
+
+#visualisateur .pseudo6{
   font-size: 13px;
  text-decoration: underline;
   margin-left: 55px;
