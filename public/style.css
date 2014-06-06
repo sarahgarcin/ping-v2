@@ -363,61 +363,11 @@ div.filebutton {
   margin-top: -10px;
 }
 
-#visualisateur .pseudo{
- font-size: 15px;
+#visualisateur .pseudo, .pseudo2, .pseudo3, .pseudo4, .pseudo5, .pseudo6{
+ font-size: 13px;
  text-decoration: underline;
  margin-left: 55px;
  color:#545454;
  font-family: "ume", serif;
  letter-spacing: 1px;
-}
-
-#visualisateur .pseudo2{
-  font-size: 13px;
- text-decoration: underline;
- margin-left: 55px;
- color:#545454;
- font-family: "ume", serif;
- letter-spacing: 1px;
-
-}
-
-#visualisateur .pseudo3{
-  font-size: 13px;
- text-decoration: underline;
-  margin-left: 55px;
- color:#545454;
-   font-family: "ume", serif;
-  letter-spacing: 1px;
-
-}
-
-#visualisateur .pseudo4{
-  font-size: 13px;
- text-decoration: underline;
- margin-left: 55px;
- color:#545454;
- font-family: "ume", serif;
- letter-spacing: 1px;
-
-}
-
-#visualisateur .pseudo5{
-  font-size: 13px;
- text-decoration: underline;
-  margin-left: 55px;
- color:#545454;
-   font-family: "ume", serif;
-  letter-spacing: 1px;
-
-}
-
-#visualisateur .pseudo6{
-  font-size: 13px;
- text-decoration: underline;
-  margin-left: 55px;
- color:#545454;
-   font-family: "ume", serif;
-  letter-spacing: 1px;
-
 }

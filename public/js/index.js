@@ -2,6 +2,7 @@ $(document).ready(function(){
 
   var serverBaseUrl = document.domain;
   var socket = io.connect(serverBaseUrl);
+  // var siofu = new SocketIOFileUpload(socket);
 
 
     keyEvent();
@@ -38,6 +39,7 @@ $(document).ready(function(){
 
     });
 
+
     // var twice = 0;
     // $("#pad_perso").keyup(function (e){
     //     if(e.keyCode == 13){
@@ -58,16 +60,11 @@ $(document).ready(function(){
 
     // Envoie en temps réel au serveur la valeur du textarea
     $("#pad_perso").keyup(function (e) {
+        //timecode pour chaque mot tapé
         var time = new Date();
         if(e.keyCode == 32 || e.keyCode == 13){
             socket.emit('sendnotes', {text: $('#pad_perso').val(), user:user, time:time});
         }
-
-
-        // // Timecode sur chaque lettre tapée
-        // var time = new Date();
-        // console.log(time);
-
     });
 
     // Récupération de la valeur des textarea et se mettent dans le visualisateur prévu.
@@ -144,6 +141,8 @@ $(document).ready(function(){
     socket.on('user image', image);
     function image (from, base64Image) {
         $('#river').append($('<p>').append($('<b>').text(from), '</br><img src="' + base64Image + '"/>'));
+        var scrollImage = $('#river');
+        scrollImage.scrollTop(scrollImage[0].scrollHeight - scrollImage.height());
     }
 
     $('#imagefile').bind('change', function(e){
@@ -194,12 +193,12 @@ function keyEvent() {
 
     var chrono = 0;
     var typingTimer;                //timer identifier
-    var doneTypingInterval = 10000;  //time in ms, 5 second for example
+    var doneTypingInterval = 10000;  //time in ms
 
     chrono = setInterval(function () {
         var currentVal = $('#pad_perso').val();
-        $('#pad_perso').val(currentVal + '|  \n');
-    }, 10000);
+        $('#pad_perso').val(currentVal + '\n');
+    }, doneTypingInterval);
 
     $('#pad_perso').keydown(function(event){
             // console.log('You pressed a key');
@@ -216,7 +215,7 @@ function keyEvent() {
     chrono = setInterval(function () {
         var currentVal = $('#pad_perso').val();
         $('#pad_perso').val(currentVal + '|  \n');
-    }, 10000);
+    }, doneTypingInterval);
     }
 
 }
