@@ -51,7 +51,7 @@ io.sockets.on('connection', function (socket) {
     socket.on('nouveau_client', function (user) {
         socket.user = user;
         users.push(user);
-        // updateClients();
+        updateClients();
 
     });
 
@@ -95,9 +95,9 @@ io.sockets.on('connection', function (socket) {
 });
 
 
-// function updateClients() {
-//     io.sockets.emit('update', users);
-// }
+function updateClients() {
+    io.sockets.emit('update', users);
+}
 
 
 /**

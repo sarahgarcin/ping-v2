@@ -25,7 +25,7 @@ $(document).ready(function(){
     var userCount = [];
 
     // New socket connected, display new count on page
-    socket.on('users connected', function(data){
+    socket.on('users connected', function (data){
         $('#connected').html('Contributeurs: ' + data);
     })
 
@@ -38,18 +38,29 @@ $(document).ready(function(){
 
     });
 
+    // var twice = 0;
+    // $("#pad_perso").keyup(function (e){
+    //     if(e.keyCode == 13){
+    //         twice +=1;
+
+    //         if(twice == 1 && e.keyCode !== 13){
+    //             twice=0;
+    //         }
+
+    //         if(twice == 2){
+    //             var time = new Date();
+    //             var currentVal = $("#pad_perso").val();
+    //             $("#pad_perso").val( currentVal + time.getHours() +":" + time.getMinutes() + ":" + time.getSeconds() + "  " + "\n");
+    //             twice = 0;
+    //         }
+    //     }
+    // });
 
     // Envoie en temps réel au serveur la valeur du textarea
     $("#pad_perso").keyup(function (e) {
+        var time = new Date();
         if(e.keyCode == 32 || e.keyCode == 13){
-            //socket.send(JSON.stringify($('#pad_perso').val()));
-
-            socket.emit('sendnotes', {text: $('#pad_perso').val(), user:user});
-
-            // Envoie au serveur l'id de celui qui écrit
-            // for(var i=0; i<id.length; i++) {
-            //     socket.emit('id', id[i]);
-            // }
+            socket.emit('sendnotes', {text: $('#pad_perso').val(), user:user, time:time});
         }
 
 
@@ -62,67 +73,71 @@ $(document).ready(function(){
     // Récupération de la valeur des textarea et se mettent dans le visualisateur prévu.
     socket.on('receivenotes', function (data) {
 
-        socket.on('id', function (id) {
-            if(id == userList[0]){
-                $('#visu').val(JSON.parse(data));
+        // $("#visualisateur").append("<div id='visu'></div>");
+        // $("#visu").val(data.text);
+        // $("#visu").prepend('<p>' + data.user + '</p>');
+        // $("#visu").scrollTop($("#visu")[0].scrollHeight - $("#visu").height());
+        console.log(data.time);
+
+            if(data.user == userList[0]){
+                $('#visu').val(data.text);
                 var textArea = $('#visu');
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
                 if( $('.pseudo').is(':empty') ) {
-                    $('.pseudo').append('<p>' + id + '</p>');
+                    $('.pseudo').append('<p>' + data.user + '</p>');
                 }
                 $("#visu").css('display', 'block');
             }
 
-            if(id == userList[1]){
-                $('#visu2').val(JSON.parse(data));
+            if(data.user == userList[1]){
+                $('#visu2').val(data.text);
                 var textArea = $('#visu2');
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
                 if( $('.pseudo2').is(':empty') ) {
-                    $('.pseudo2').append('<p>' + id + '</p>');
+                    $('.pseudo2').append('<p>' + data.user + '</p>');
                 }
                 $("#visu2").css('display', 'block');
             }
 
-            if(id == userList[2]){
-                $('#visu3').val(JSON.parse(data));
+            if(data.user == userList[2]){
+                $('#visu3').val(data.text);
                 var textArea = $('#visu3');
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
                 if( $('.pseudo3').is(':empty') ) {
-                    $('.pseudo3').append('<p>' + id + '</p>');
+                    $('.pseudo3').append('<p>' + data.user + '</p>');
                 }
                 $("#visu3").css('display', 'block');
             }
 
-            if(id == userList[3]){
-                $('#visu4').val(JSON.parse(data));
+            if(data.user == userList[3]){
+                $('#visu4').val(data.text);
                 var textArea = $('#visu4');
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
                 if( $('.pseudo4').is(':empty') ) {
-                    $('.pseudo4').append('<p>' + id + '</p>');
+                    $('.pseudo4').append('<p>' + data.user + '</p>');
                 }
                 $("#visu4").css('display', 'block');
             }
 
-            if(id == userList[4]){
-                $('#visu5').val(JSON.parse(data));
+            if(data.user == userList[4]){
+                $('#visu5').val(data.text);
                 var textArea = $('#visu5');
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
                 if( $('.pseudo5').is(':empty') ) {
-                    $('.pseudo5').append('<p>' + id + '</p>');
+                    $('.pseudo5').append('<p>' + data.user + '</p>');
                 }
                 $("#visu5").css('display', 'block');
             }
 
-            if(id == userList[5]){
-                $('#visu6').val(JSON.parse(data));
+            if(data.user == userList[5]){
+                $('#visu6').val(data.text);
                 var textArea = $('#visu6');
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
                 if( $('.pseudo6').is(':empty') ) {
-                    $('.pseudo6').append('<p>' + id + '</p>');
+                    $('.pseudo6').append('<p>' + data.user + '</p>');
                 }
                 $("#visu6").css('display', 'block');
             }
-        })
     });
 
     // Récupération des images
@@ -141,6 +156,7 @@ $(document).ready(function(){
       reader.readAsDataURL(data);
 
     });
+
 });
 
 // Synchronise les scrolls des textarea
