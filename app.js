@@ -71,6 +71,10 @@ io.sockets.on('connection', function (socket) {
       socket.broadcast.emit('user image', socket.user, msg);
     });
 
+    socket.on('comment image', function (comment){
+        socket.broadcast.emit('comment image', comment);
+    })
+
     socket.on('disconnect', function (user) {
         for(var i=0; i<users.length; i++) {
             if(users[i] == socket.user) {

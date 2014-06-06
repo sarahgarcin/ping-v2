@@ -140,7 +140,7 @@ $(document).ready(function(){
     // Récupération des images
     socket.on('user image', image);
     function image (from, base64Image) {
-        $('#river').append($('<p>').append($('<b>').text(from), '</br><img src="' + base64Image + '"/>'));
+        $('#river').append($('<p>').append($('<b>').text(from), '</br><img src="' + base64Image + '"/>' + '</br><div class="comment"></div>'));       
         var scrollImage = $('#river');
         scrollImage.scrollTop(scrollImage[0].scrollHeight - scrollImage.height());
     }
@@ -149,11 +149,27 @@ $(document).ready(function(){
       var data = e.originalEvent.target.files[0];
       var reader = new FileReader();
       reader.onload = function(evt){
-        image('me', evt.target.result);
+        image('moi', evt.target.result);
+        
+        $("#river p").append("<button class='commenter'>COMMENTER</button>");
+        $(".commenter").click(function(){
+            $(".commenter").css("display", "none");
+            $('#river').append('<input type="text" class="commentInput"></input></br><input type="submit" class="commentSubmit"></input> ');
+            $(".commentSubmit").click(function(){
+                $("input").css("display", "none");
+                $(".comment").append($(".commentInput").val());
+                socket.emit('comment image', $(".commentInput").val());        
+            });
+        });
+
         socket.emit('user image', evt.target.result);
       };
       reader.readAsDataURL(data);
 
+    });
+
+    socket.on('comment image', function (comment){
+        $(".comment").append(comment);
     });
 
 });
@@ -198,6 +214,8 @@ function keyEvent() {
     chrono = setInterval(function () {
         var currentVal = $('#pad_perso').val();
         $('#pad_perso').val(currentVal + '\n');
+        var scrolltext = $('#pad_perso');
+        scrolltext.scrollTop(scrolltext[0].scrollHeight - scrolltext.height());
     }, doneTypingInterval);
 
     $('#pad_perso').keydown(function(event){
@@ -215,6 +233,8 @@ function keyEvent() {
     chrono = setInterval(function () {
         var currentVal = $('#pad_perso').val();
         $('#pad_perso').val(currentVal + '|  \n');
+        var scrolltext = $('#pad_perso');
+        scrolltext.scrollTop(scrolltext[0].scrollHeight - scrolltext.height());
     }, doneTypingInterval);
     }
 
