@@ -104,6 +104,16 @@ textarea {
     margin-top: -20px;
 }
 
+#connected{
+  top:10px;
+  right:150px; 
+  position:absolute;
+  font-size: 13px;
+  font-family: "ume", serif;
+  color:#545454;
+  letter-spacing: 1px;
+}
+
 #content {
   width:100%; 
   margin-top: 10px;
@@ -152,7 +162,7 @@ textarea {
 }
 
 #content li.active{
-    background: #FFF;
+  background: #FFF;
   border-top: 1px solid #1A22FA;
   border-right: 1px solid #1A22FA;
   border-left: 1px solid #1A22FA;
@@ -232,7 +242,7 @@ textarea {
 }
 
 
-/* RIVER */
+/* -------------- RIVIERE ----------------- */
 
 .common .filebutton {
   float:left;
@@ -328,20 +338,30 @@ div.filebutton {
   cursor: pointer;
 }
 
+#river button.commenter {
+  font-family: "ume_balsa", serif;
+  color: #1A22FA;;
+  border: 1px solid #1A22FA;
+  background: none;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+#river input.commentinput {
+  width:220px;
+  font-family: "ume_balsa", serif;
+  border: 1px solid #1A22FA;
+  background: none;
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+/* --------- VISUALISATEURS ----------- */
+
 #visualisateur {
   margin-top: -15px;
   width:28%;
   float: left;
-}
-
-#visualisateur #connected{
-  top:10px;
-  right:150px; 
-  position:absolute;
-  font-size: 13px;
-  font-family: "ume", serif;
-  color:#545454;
-  letter-spacing: 1px;
 }
 
 #visualisateur textarea{
@@ -353,8 +373,8 @@ div.filebutton {
   color:#545454;
 }
 
-#visualisateur #visu, #visu2, #visu3, #visu4, #visu5, #visu6 {
-  display:none;
+#visualisateur #visu0, #visu1, #visu2, #visu3, #visu4, #visu5 {
+/*  display:none;*/
   font-size: 11px;
   line-height: 17px;
   letter-spacing: 0.05em;

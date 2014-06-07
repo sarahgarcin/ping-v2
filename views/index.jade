@@ -10,6 +10,7 @@ html
   div.header
     div.accueil ←
     div.conf_title Diplôme blanc Victor & Sarah, 03 juin 2014, ENSAD, salle 305
+    div#connected
 
   div.title(style='white-space:pre;') 
       |         ___                     ___           ___     
@@ -32,7 +33,7 @@ html
         li.html(href="#") HTML
 
 
-      textarea#pad_perso PING est un outil de prise de notes qui utilise
+      textarea#pad_perso.scrollDiv PING est un outil de prise de notes qui utilise
 
     div#previewer
 
@@ -43,19 +44,6 @@ html
       div#river
 
     div#visualisateur
-      div#connected
-      div.pseudo
-      textarea#visu
-      div.pseudo2
-      textarea#visu2
-      div.pseudo3
-      textarea#visu3
-      div.pseudo4
-      textarea#visu4
-      div.pseudo5
-      textarea#visu5
-      div.pseudo6
-      textarea#visu6
 
 
   script(type="text/javascript", src="/socket.io/socket.io.js")

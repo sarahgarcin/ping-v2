@@ -4,6 +4,7 @@ var http = require('http').createServer(app);
 var io = require('socket.io').listen(http); // création d'un objet app avec express + serveur + socket.io
 
 var config  = require('./config');
+var fs = require('fs');
 
 /*
 * Server config
@@ -57,23 +58,28 @@ io.sockets.on('connection', function (socket) {
 
     // on recoit du contenu supp
     socket.on('sendnotes', function (data) {
-      console.log("message", data);
-      socket.broadcast.emit('receivenotes', data);
-
-      // socket.broadcast.emit('notes', data);
-      // socket.on('id', function(id){
-      //   socket.broadcast.emit('id', id);
-      // });
-
+        console.log("message", data);
+        socket.broadcast.emit('receivenotes', data);
     });
 
-    socket.on('user image', function (msg) {
-      socket.broadcast.emit('user image', socket.user, msg);
+    socket.on('user image', function (data) {
+        var time = new Date();
+        var ts = time.getHours() +"-" + time.getMinutes() + "-" + time.getSeconds();
+        var fileName = __dirname + '/public/images/' + socket.user + "_" + ts + ".jpg";
+
+        var imageBuffer = decodeBase64Image(data);
+        console.log(imageBuffer);
+
+        fs.writeFile(fileName, imageBuffer.data, function (err) {
+            console.info("write new file to " + fileName);
+        });   
+
+        socket.broadcast.emit('user image', socket.user, data);
     });
 
-    socket.on('comment image', function (comment){
-        socket.broadcast.emit('comment image', comment);
-    })
+    // socket.on('comment image', function (message){
+    //     socket.broadcast.emit('comment image', message);
+    // })
 
     socket.on('disconnect', function (user) {
         for(var i=0; i<users.length; i++) {
@@ -102,6 +108,39 @@ io.sockets.on('connection', function (socket) {
 function updateClients() {
     io.sockets.emit('update', users);
 }
+
+function decodeBase64Image(dataString) {
+    var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+    response = {};
+
+    if (matches.length !== 3) {
+        return new Error('Invalid input string');
+    }
+
+    response.type = matches[1];
+    response.data = new Buffer(matches[2], 'base64');
+
+    return response;
+}
+
+// function saveNotes(req, res){
+
+//     var newsesspath = __dirname + '/public/session/' + req.user;
+//     // var newsesspath = 'sessions/'+req.body.name;
+//     // var fstat = fs.statSync(newsesspath);
+//     // if(!fstat.isDirectory()){
+//       fs.mkdir(newsesspath, function(){
+//         // create csv file for record
+//         var data_fd = fs.openSync(newsesspath+'/data.json', 'w+');
+//         fs.writeSync(data_fd, JSON.stringify([]));
+//         fs.close(data_fd);
+
+//         // create sub folders for images
+//         for (var i = 3; i > 0; i--) {
+//           fs.mkdir(newsesspath+'/0'+i);
+//         };
+//       });
+// }
 
 
 /**

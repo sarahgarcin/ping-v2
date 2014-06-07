@@ -30,15 +30,25 @@ $(document).ready(function(){
         $('#connected').html('Contributeurs: ' + data);
     })
 
+    // socket.on('update', function (users){
+    //     userList = users;
+    //     $('#user').empty();
+    //     for(var i=0; i<userList.length; i++) {
+    //         $('#user').append("<h1>" + userList[i] + "</h1>");
+    //     }
+
+    // });
+
     socket.on('update', function (users){
         userList = users;
-        $('#user').empty();
+        $('#visualisateur').empty();
         for(var i=0; i<userList.length; i++) {
-            $('#user').append("<h1>" + userList[i] + "</h1>");
+            if(userList[i] !== user){
+                $('#visualisateur').append("<div class='pseudo'>" + userList[i] + "</div><textarea id='visu"+i+"'></textarea>");
+            }
         }
 
     });
-
 
     // var twice = 0;
     // $("#pad_perso").keyup(function (e){
@@ -69,123 +79,97 @@ $(document).ready(function(){
 
     // Récupération de la valeur des textarea et se mettent dans le visualisateur prévu.
     socket.on('receivenotes', function (data) {
-
-        // $("#visualisateur").append("<div id='visu'></div>");
-        // $("#visu").val(data.text);
-        // $("#visu").prepend('<p>' + data.user + '</p>');
-        // $("#visu").scrollTop($("#visu")[0].scrollHeight - $("#visu").height());
-        console.log(data.time);
-
             if(data.user == userList[0]){
-                $('#visu').val(data.text);
-                var textArea = $('#visu');
+                $('#visu0').val(data.text);
+                var textArea = $('#visu0');
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
-                if( $('.pseudo').is(':empty') ) {
-                    $('.pseudo').append('<p>' + data.user + '</p>');
-                }
-                $("#visu").css('display', 'block');
             }
 
             if(data.user == userList[1]){
-                $('#visu2').val(data.text);
-                var textArea = $('#visu2');
+                $('#visu1').val(data.text);
+                var textArea = $('#visu1');
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
-                if( $('.pseudo2').is(':empty') ) {
-                    $('.pseudo2').append('<p>' + data.user + '</p>');
-                }
-                $("#visu2").css('display', 'block');
             }
 
             if(data.user == userList[2]){
-                $('#visu3').val(data.text);
-                var textArea = $('#visu3');
+                $('#visu2').val(data.text);
+                var textArea = $('#visu2');
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
-                if( $('.pseudo3').is(':empty') ) {
-                    $('.pseudo3').append('<p>' + data.user + '</p>');
-                }
-                $("#visu3").css('display', 'block');
             }
 
             if(data.user == userList[3]){
-                $('#visu4').val(data.text);
-                var textArea = $('#visu4');
+                $('#visu3').val(data.text);
+                var textArea = $('#visu3');
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
-                if( $('.pseudo4').is(':empty') ) {
-                    $('.pseudo4').append('<p>' + data.user + '</p>');
-                }
-                $("#visu4").css('display', 'block');
             }
 
             if(data.user == userList[4]){
-                $('#visu5').val(data.text);
-                var textArea = $('#visu5');
+                $('#visu4').val(data.text);
+                var textArea = $('#visu4');
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
-                if( $('.pseudo5').is(':empty') ) {
-                    $('.pseudo5').append('<p>' + data.user + '</p>');
-                }
-                $("#visu5").css('display', 'block');
             }
 
             if(data.user == userList[5]){
-                $('#visu6').val(data.text);
-                var textArea = $('#visu6');
+                $('#visu5').val(data.text);
+                var textArea = $('#visu5');
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
-                if( $('.pseudo6').is(':empty') ) {
-                    $('.pseudo6').append('<p>' + data.user + '</p>');
-                }
-                $("#visu6").css('display', 'block');
             }
     });
 
     // Récupération des images
-    socket.on('user image', image);
-    function image (from, base64Image) {
+    socket.on('user image', image); //reçoit les données et affiche l'image avec la function image
+    function image (from, base64Image) {  // décode le DataURl de l'image en base64Image
         $('#river').append($('<p>').append($('<b>').text(from), '</br><img src="' + base64Image + '"/>' + '</br><div class="comment"></div>'));       
         var scrollImage = $('#river');
         scrollImage.scrollTop(scrollImage[0].scrollHeight - scrollImage.height());
     }
 
     $('#imagefile').bind('change', function(e){
-      var data = e.originalEvent.target.files[0];
-      var reader = new FileReader();
-      reader.onload = function(evt){
-        image('moi', evt.target.result);
-        
-        $("#river p").append("<button class='commenter'>COMMENTER</button>");
-        $(".commenter").click(function(){
-            $(".commenter").css("display", "none");
-            $('#river').append('<input type="text" class="commentInput"></input></br><input type="submit" class="commentSubmit"></input> ');
-            $(".commentSubmit").click(function(){
-                $("input").css("display", "none");
-                $(".comment").append($(".commentInput").val());
-                socket.emit('comment image', $(".commentInput").val());        
-            });
-        });
-
-        socket.emit('user image', evt.target.result);
-      };
-      reader.readAsDataURL(data);
+        var data = e.originalEvent.target.files[0];
+        var reader = new FileReader();      
+        reader.onload = function(evt){
+            image('moi', evt.target.result);
+            // socket.emit('user image', imageDataUrl);
+            socket.emit('user image', evt.target.result);
+        };
+    
+        reader.readAsDataURL(data);
 
     });
 
-    socket.on('comment image', function (comment){
-        $(".comment").append(comment);
-    });
+    //         //AJOUTER DES COMMENTAIRES - BUG
+    //     function addComment(){
+    //         $(".comment").append("<button class='commenter'>COMMENTER</button>");
+            // $(".commenter").click(function(){
+            //     $(".commenter").css("display", "none");
+            //     $('#river').append('<input type="text" class="commentInput"></input></br><input type="submit" class="commentSubmit"></input> ');
+            //     $(".commentSubmit").click(function(){
+            //         $("input").css("display", "none");
+            //         $(".comment").append($(".commentInput").val());
+    //                 socket.emit('comment image', $(".commentInput").val());        
+    //             });
+    //         });
+    //     }
+
+    // //AJOUTER DES COMMENTAIRES - BUG
+    // socket.on('comment image', function (comment){
+    //     $(".comment").append(comment);
+    // });
 
 });
 
 // Synchronise les scrolls des textarea
-// function syncScroll() {
+function syncScroll() {
 
-//     var $divs = $('#pad_perso, #visu');
-//     var sync = function(e){
-//         var $other = $divs.not(this).off('scroll'), other = $other.get(0);
-//         var percentage = this.scrollTop / (this.scrollHeight - this.offsetHeight);
-//         other.scrollTop = percentage * (other.scrollHeight - other.offsetHeight);
-//     }
-//     $divs.on( 'scroll', sync);
-
-// }
+    var $divs = $('.scrollDiv');
+    var sync = function(e){
+        var $other = $divs.not(this).off('scroll'), other = $other.get(0);
+        var percentage = this.scrollTop / (this.scrollHeight - this.offsetHeight);
+        other.scrollTop = percentage * (other.scrollHeight - other.offsetHeight);
+        setTimeout( function(){ $other.on('scroll', sync ); },10);
+    }
+    $divs.on( 'scroll', sync);
+}
 
 function markdownToHtml(){
 
@@ -213,7 +197,7 @@ function keyEvent() {
 
     chrono = setInterval(function () {
         var currentVal = $('#pad_perso').val();
-        $('#pad_perso').val(currentVal + '\n');
+        $('#pad_perso').val(currentVal + '| \n');
         var scrolltext = $('#pad_perso');
         scrolltext.scrollTop(scrolltext[0].scrollHeight - scrolltext.height());
     }, doneTypingInterval);
