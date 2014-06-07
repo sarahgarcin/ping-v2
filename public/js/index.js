@@ -8,6 +8,7 @@ $(document).ready(function(){
     keyEvent();
     rechremp();
     markdownToHtml();
+    upAndDown();
     // syncScroll();
 
     $("#pad_perso").crevasse({
@@ -158,6 +159,28 @@ $(document).ready(function(){
     // });
 
 });
+
+function upAndDown(){
+    var scrolled=0;
+    $("#downClick").on("click" ,function(){
+                scrolled=scrolled+300;
+        
+                $("#visualisateur").animate({
+                        scrollTop:  scrolled
+                   });
+
+            });
+
+    
+    $("#upClick").on("click" ,function(){
+                scrolled=scrolled-300;
+                
+                $("#visualisateur").animate({
+                        scrollTop:  scrolled
+                   });
+
+            });
+}
 
 // Synchronise les scrolls des textarea
 function syncScroll() {
