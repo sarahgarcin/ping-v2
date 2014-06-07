@@ -56,10 +56,11 @@ io.sockets.on('connection', function (socket) {
 
     });
 
-    // on recoit du contenu supp
+    // Reçoit le contenu "notes"
     socket.on('sendnotes', function (data) {
-        console.log("message", data);
-        socket.broadcast.emit('receivenotes', data);
+        var fileName = __dirname + '/public/sessions/' + socket.user + ".txt"; // créer un fichier texte dans lequel vont s'écrire les données
+        fs.writeFileSync(fileName, data.text); // Écrire dans ce fichier en synchronisant
+        socket.broadcast.emit('receivenotes', data); // Envoyer les "notes" à tous les users connectés
     });
 
     socket.on('user image', function (data) {

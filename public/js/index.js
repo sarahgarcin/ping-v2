@@ -39,6 +39,7 @@ $(document).ready(function(){
 
     // });
 
+// Fait apparaître son visualisateur à chaque connection de user
     socket.on('update', function (users){
         userList = users;
         $('#visualisateur').empty();
