@@ -59,7 +59,11 @@ io.sockets.on('connection', function (socket) {
     // Reçoit le contenu "notes"
     socket.on('sendnotes', function (data) {
         var fileName = __dirname + '/public/sessions/' + socket.user + ".txt"; // créer un fichier texte dans lequel vont s'écrire les données
-        fs.writeFileSync(fileName, data.text); // Écrire dans ce fichier en synchronisant
+        var fileBrut = __dirname + '/public/sessions/' + socket.user + "-" + "brut.txt"; // créer un fichier texte dans lequel vont s'écrire les données
+        fs.writeFileSync(fileBrut, data.text); // Écrire dans les notes dans un fichier texte
+        fs.writeFile(fileName, JSON.stringify(data), function (err){ // Écrire dans les notes + timestamp + user dans un fichier json
+            console.log(err);
+        });
         socket.broadcast.emit('receivenotes', data); // Envoyer les "notes" à tous les users connectés
     });
 
