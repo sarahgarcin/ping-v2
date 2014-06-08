@@ -60,7 +60,7 @@ body {
     height: 98%;
     color:#000;
     background: #C6C6C6;
-    font-size: 12px;
+    font-size: 13px;
     font-family: 'interval', monospace;
     margin: 0 40px;
     font-weight: normal;
@@ -68,7 +68,7 @@ body {
 
 }
 
-textarea {
+textarea, #padperso {
     font-family: 'interval', monospace;
     font-size: 13px;
     padding: 10px;
@@ -121,15 +121,27 @@ textarea {
 }
 
 
-#content .pad textarea#pad_perso{
+#content .pad #pad_perso{
   width:37%;
   height:600px;
   float:left; 
   margin-left:0px; 
   margin-top:0px;
+  padding: 15px;
   border-top: 1px solid #1A22FA;
   border-left: 1px solid #1A22FA;
   border-bottom: 1px solid #1A22FA;
+  background: #FFF;
+  outline:0;
+}
+
+#fake {
+  display: none;
+  width:37%;
+  height:600px;
+  float:left; 
+  margin-left:0px; 
+  margin-top:0px;
 }
 
 /*#content .pad .pad_title{

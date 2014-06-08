@@ -11,7 +11,7 @@ $(document).ready(function(){
     upAndDown();
     // syncScroll();
 
-        $("#pad_perso").crevasse({
+        $("#fake").crevasse({
             previewer: $("#previewer")
         });
 
@@ -75,7 +75,7 @@ $(document).ready(function(){
         //timecode pour chaque mot tapé
         var time = new Date();
         if(e.keyCode == 32 || e.keyCode == 13){
-            socket.emit('sendnotes', {text: $('#pad_perso').val(), user:user, time:time});
+            socket.emit('sendnotes', {text: $('#pad_perso').text(), user:user, time:time});
         }
     });
 
@@ -198,18 +198,48 @@ function syncScroll() {
 
 function markdownToHtml(){
 
-    $(".html").click(function(){
-        $(this).addClass("active");
+    $(".html").on('click', onClickHtml);
+    $(".markdown").on('click', onClickMarkdown);
+
+    function onClickHtml(event){
+        changeTabs();
+        cleanHtml();
+        updateMarkdown();
+    }
+
+    function changeTabs(){
+        $(".html").addClass("active");
         $(".markdown").removeClass("active");
         $("#previewer").css('display', 'block');
+    }
 
-    });
+    function cleanHtml(){
+        var htmlString = $("#pad_perso").html();
+        $("#fake").val(htmlString);        
+        var str = $("#fake").val();
+        var regexBr = /<br\s*\/?>/gi;
+        var regexDiv = /<div>/gi;
+        var regexDivClose = /<\/div>/gi;  
+        var regexNbsp = /\&nbsp;/gi;
+        var regexSlash = /\/\//gi;
+        str = str.replace(regexBr, "\n");
+        str = str.replace(regexDiv, "\n\n");
+        str = str.replace(regexDivClose, "");
+        str = str.replace(regexNbsp, " ");
+        str = str.replace(regexSlash, ">");        
+        $("#fake").val(str);
 
-    $(".markdown").click(function(){
+    }
+
+    function updateMarkdown(){
+        $("#fake").trigger("change");
+    }
+
+    function onClickMarkdown(){
         $(this).addClass("active");
         $(".html").removeClass("active");
         $("#previewer").css('display', 'none');
-    });
+    }
 }
 
 // Timeline
