@@ -128,26 +128,6 @@ function decodeBase64Image(dataString) {
     return response;
 }
 
-// function saveNotes(req, res){
-
-//     var newsesspath = __dirname + '/public/session/' + req.user;
-//     // var newsesspath = 'sessions/'+req.body.name;
-//     // var fstat = fs.statSync(newsesspath);
-//     // if(!fstat.isDirectory()){
-//       fs.mkdir(newsesspath, function(){
-//         // create csv file for record
-//         var data_fd = fs.openSync(newsesspath+'/data.json', 'w+');
-//         fs.writeSync(data_fd, JSON.stringify([]));
-//         fs.close(data_fd);
-
-//         // create sub folders for images
-//         for (var i = 3; i > 0; i--) {
-//           fs.mkdir(newsesspath+'/0'+i);
-//         };
-//       });
-// }
-
-
 /**
 * Start the http server at port and IP defined before
 */

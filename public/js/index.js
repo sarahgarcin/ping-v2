@@ -11,9 +11,9 @@ $(document).ready(function(){
     upAndDown();
     // syncScroll();
 
-    $("#pad_perso").crevasse({
-        previewer: $("#previewer")
-    });
+        $("#pad_perso").crevasse({
+            previewer: $("#previewer")
+        });
 
     var id = [];
 
@@ -81,6 +81,7 @@ $(document).ready(function(){
 
     // Récupération de la valeur des textarea et se mettent dans le visualisateur prévu.
     socket.on('receivenotes', function (data) {
+        console.log(data.time);
             if(data.user == userList[0]){
                 $('#visu0').val(data.text);
                 var textArea = $('#visu0');
@@ -115,7 +116,7 @@ $(document).ready(function(){
                 $('#visu5').val(data.text);
                 var textArea = $('#visu5');
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
-            }
+            }       
     });
 
     // Récupération des images
@@ -139,7 +140,7 @@ $(document).ready(function(){
 
     });
 
-    //         //AJOUTER DES COMMENTAIRES - BUG
+ //AJOUTER DES COMMENTAIRES - BUG
     //     function addComment(){
     //         $(".comment").append("<button class='commenter'>COMMENTER</button>");
             // $(".commenter").click(function(){
@@ -209,7 +210,6 @@ function markdownToHtml(){
         $(".html").removeClass("active");
         $("#previewer").css('display', 'none');
     });
-
 }
 
 // Timeline
@@ -238,14 +238,13 @@ function keyEvent() {
     });
 
     function doneTyping () {
-    chrono = setInterval(function () {
+        chrono = setInterval(function () {
         var currentVal = $('#pad_perso').val();
         $('#pad_perso').val(currentVal + '|  \n');
         var scrolltext = $('#pad_perso');
         scrolltext.scrollTop(scrolltext[0].scrollHeight - scrolltext.height());
     }, doneTypingInterval);
     }
-
 }
 
 // Regex / abbréviations
@@ -344,5 +343,4 @@ function rechremp() {
 
 
     });
-
 }
