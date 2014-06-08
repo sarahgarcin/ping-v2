@@ -133,6 +133,14 @@ textarea, #padperso {
   border-bottom: 1px solid #1A22FA;
   background: #FFF;
   outline:0;
+  overflow: scroll;
+  font-size: 13px;
+  color:#000;
+}
+
+#content #pad_perso .timer{
+  font-size: 9px;
+  color:#545454;
 }
 
 #fake {

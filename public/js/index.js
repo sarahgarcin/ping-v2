@@ -4,16 +4,17 @@ $(document).ready(function(){
   var socket = io.connect(serverBaseUrl);
   // var siofu = new SocketIOFileUpload(socket);
 
+    $("#pad_perso").focus();
 
-    keyEvent();
+    // timerEvent();
     rechremp();
     markdownToHtml();
     upAndDown();
     // syncScroll();
 
-        $("#fake").crevasse({
+    $("#fake").crevasse({
             previewer: $("#previewer")
-        });
+    });
 
     var id = [];
 
@@ -73,9 +74,13 @@ $(document).ready(function(){
     // Envoie en temps réel au serveur la valeur du textarea
     $("#pad_perso").keyup(function (e) {
         //timecode pour chaque mot tapé
-        var time = new Date();
+        var timestamp = new Date();
+        var time = timestamp.getHours() +":" + timestamp.getMinutes() + ":" + timestamp.getSeconds();
         if(e.keyCode == 32 || e.keyCode == 13){
             socket.emit('sendnotes', {text: $('#pad_perso').text(), user:user, time:time});
+            var str = time;
+            var timeClass = str.substr(0,7);
+            $('#pad_perso div').addClass(timeClass);
         }
     });
 
@@ -219,11 +224,13 @@ function markdownToHtml(){
         var str = $("#fake").val();
         var regexBr = /<br\s*\/?>/gi;
         var regexDiv = /<div>/gi;
+        var regexDivClass = /<div class=(.*?)>/gi;
         var regexDivClose = /<\/div>/gi;  
         var regexNbsp = /\&nbsp;/gi;
         var regexSlash = /\/\//gi;
         str = str.replace(regexBr, "\n");
         str = str.replace(regexDiv, "\n\n");
+        str = str.replace(regexDivClass, "\n\n");
         str = str.replace(regexDivClose, "");
         str = str.replace(regexNbsp, " ");
         str = str.replace(regexSlash, ">");        
@@ -243,21 +250,20 @@ function markdownToHtml(){
 }
 
 // Timeline
-function keyEvent() {
-
+function timerEvent() {
     var chrono = 0;
     var typingTimer;                //timer identifier
-    var doneTypingInterval = 10000;  //time in ms
+    var doneTypingInterval = 5000;  //time in ms
+    var time = new Date();
 
     chrono = setInterval(function () {
-        var currentVal = $('#pad_perso').val();
-        $('#pad_perso').val(currentVal + '| \n');
+        var currentVal = $('#pad_perso').html();
+        $('#pad_perso').html(currentVal + "<span class='timer'>" + time.getHours() +":" + time.getMinutes() + ":" + time.getSeconds() + "</span>" + "<br>");
         var scrolltext = $('#pad_perso');
         scrolltext.scrollTop(scrolltext[0].scrollHeight - scrolltext.height());
     }, doneTypingInterval);
 
     $('#pad_perso').keydown(function(event){
-            // console.log('You pressed a key');
             clearInterval(chrono);
             clearTimeout(typingTimer);
     });
@@ -269,8 +275,8 @@ function keyEvent() {
 
     function doneTyping () {
         chrono = setInterval(function () {
-        var currentVal = $('#pad_perso').val();
-        $('#pad_perso').val(currentVal + '|  \n');
+        var currentVal = $('#pad_perso').html();
+        $('#pad_perso').html(currentVal + "<span class='timer'>" + time.getHours() +":" + time.getMinutes() + ":" + time.getSeconds() + "</span>" + "<br>");
         var scrolltext = $('#pad_perso');
         scrolltext.scrollTop(scrolltext[0].scrollHeight - scrolltext.height());
     }, doneTypingInterval);
