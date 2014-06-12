@@ -1,19 +1,20 @@
 $(document).ready(function(){
 
-  var serverBaseUrl = document.domain;
-  var socket = io.connect(serverBaseUrl);
-  // var siofu = new SocketIOFileUpload(socket);
+    var serverBaseUrl = document.domain;
+    var socket = io.connect(serverBaseUrl);
+    // var siofu = new SocketIOFileUpload(socket);
 
     $("#pad_perso").focus();
 
-    // timerEvent();
+    timerEvent();
     rechremp();
     markdownToHtml();
     upAndDown();
+    // syncCursor();
     // syncScroll();
 
     $("#fake").crevasse({
-            previewer: $("#previewer")
+        previewer: $("#previewer")
     });
 
     var id = [];
@@ -41,7 +42,7 @@ $(document).ready(function(){
 
     // });
 
-// Fait apparaître son visualisateur à chaque connection de user
+    // Fait apparaître son visualisateur à chaque connection de user
     socket.on('update', function (users){
         userList = users;
         $('#visualisateur').empty();
@@ -71,54 +72,69 @@ $(document).ready(function(){
     //     }
     // });
 
+    // $("#pad_perso").keyup(function(){
+    //     var string = $("#pad_perso").val();
+    //     var urlRegex = '^(https?:\/\/[^\s]+[^.,:;"\')\]\s])';
+    //     var regextest = "caca"; 
+    //     // var newtxt = string.replace(regextest, 'URL');
+    //     var newtxt = string.replace(urlRegex, 'URL');
+    //     $('#pad_perso').val(newtxt);
+        // var url = string.match(urlRegex);
+        // if(url){
+        //     console.log("une url est là");
+        //     $("#river").append("<div class='url'>" + url + "</div>");
+        // }
+    // })
+
     // Envoie en temps réel au serveur la valeur du textarea
     $("#pad_perso").keyup(function (e) {
-        //timecode pour chaque mot tapé
-        var timestamp = new Date();
-        var time = timestamp.getHours() +":" + timestamp.getMinutes() + ":" + timestamp.getSeconds();
         if(e.keyCode == 32 || e.keyCode == 13){
-            socket.emit('sendnotes', {text: $('#pad_perso').text(), user:user, time:time});
-            var str = time;
-            var timeClass = str.substr(0,7);
-            $('#pad_perso div').addClass(timeClass);
+            //timecode pour chaque mot tapé
+            var timestamp = new Date();
+            var time = timestamp.getHours() +"-" + timestamp.getMinutes() + "-" + timestamp.getSeconds();
+            socket.emit('sendnotes', {text: $('#pad_perso').val(), user:user, time:time});
+            // if(e.keyCode == 13){
+            //     var str = time;
+            //     var timeClass = str.substr(0,7);
+            //     $('#pad_perso div').last().addClass(time);
+            // }
         }
     });
 
     // Récupération de la valeur des textarea et se mettent dans le visualisateur prévu.
     socket.on('receivenotes', function (data) {
-        console.log(data.time);
             if(data.user == userList[0]){
-                $('#visu0').val(data.text);
+                $('#visu0').html(data.text);
                 var textArea = $('#visu0');
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
             }
 
             if(data.user == userList[1]){
-                $('#visu1').val(data.text);
+                $('#visu1').html(data.text);
                 var textArea = $('#visu1');
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
             }
 
             if(data.user == userList[2]){
-                $('#visu2').val(data.text);
+                $('#visu2').html(data.text);
                 var textArea = $('#visu2');
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
             }
 
             if(data.user == userList[3]){
-                $('#visu3').val(data.text);
+                $('#visu3').html(data.text);
                 var textArea = $('#visu3');
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
             }
 
             if(data.user == userList[4]){
-                $('#visu4').val(data.text);
+                $('#visu4').html(data.text);
                 var textArea = $('#visu4');
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
             }
 
             if(data.user == userList[5]){
-                $('#visu5').val(data.text);
+                $('#visu5').html(data.text);
                 var textArea = $('#visu5');
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
             }       
@@ -127,9 +143,15 @@ $(document).ready(function(){
     // Récupération des images
     socket.on('user image', image); //reçoit les données et affiche l'image avec la function image
     function image (from, base64Image) {  // décode le DataURl de l'image en base64Image
-        $('#river').append($('<p>').append($('<b>').text(from), '</br><img src="' + base64Image + '"/>' + '</br><div class="comment"></div>'));       
-        var scrollImage = $('#river');
-        scrollImage.scrollTop(scrollImage[0].scrollHeight - scrollImage.height());
+            $('#river').append($('<p>').append($('<b>').text(from), '</br><img src="' + base64Image + '"/><div class="comment"></div>'));       
+            socket.on('comment image', function (message){ //ajout des commentaires
+                    $(".comment").append(message);
+                    $(".comment").addClass("commentfull");
+                    $(".comment").removeClass("comment");
+            });
+            var scrollImage = $('#river');
+            scrollImage.scrollTop(scrollImage[0].scrollHeight - scrollImage.height());
+
     }
 
     $('#imagefile').bind('change', function(e){
@@ -137,7 +159,7 @@ $(document).ready(function(){
         var reader = new FileReader();      
         reader.onload = function(evt){
             image('moi', evt.target.result);
-            // socket.emit('user image', imageDataUrl);
+            addComment();
             socket.emit('user image', evt.target.result);
         };
     
@@ -145,26 +167,50 @@ $(document).ready(function(){
 
     });
 
- //AJOUTER DES COMMENTAIRES - BUG
-    //     function addComment(){
-    //         $(".comment").append("<button class='commenter'>COMMENTER</button>");
-            // $(".commenter").click(function(){
-            //     $(".commenter").css("display", "none");
-            //     $('#river').append('<input type="text" class="commentInput"></input></br><input type="submit" class="commentSubmit"></input> ');
-            //     $(".commentSubmit").click(function(){
-            //         $("input").css("display", "none");
-            //         $(".comment").append($(".commentInput").val());
-    //                 socket.emit('comment image', $(".commentInput").val());        
-    //             });
-    //         });
-    //     }
-
-    // //AJOUTER DES COMMENTAIRES - BUG
-    // socket.on('comment image', function (comment){
-    //     $(".comment").append(comment);
-    // });
+    function addComment(){
+        $('#river').append('<button class="commenter">COMMENTER</button>');
+        $(".commenter").click(function(){
+                $('.commenter').remove();
+                $('#river').append('<input type="text" class="commentInput commentI"></input></br><input type="submit" class="commentSubmit commentI"></input> ');
+                $(".commentSubmit").click(function(){
+                        socket.emit('comment image', $("input.commentInput").val());
+                        $("input.commentI").remove();
+                });
+        });
+    }
 
 });
+
+function placeCaretAtEnd(el) {
+    el.focus();
+    if (typeof window.getSelection != "undefined"
+            && typeof document.createRange != "undefined") {
+        var range = document.createRange();
+        range.selectNodeContents(el);
+        range.collapse(false);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+    } else if (typeof document.body.createTextRange != "undefined") {
+        var textRange = document.body.createTextRange();
+        textRange.moveToElementText(el);
+        textRange.collapse(false);
+        textRange.select();
+    }
+}
+
+function syncCursor(){
+    $('#pad_perso div').each(
+    function(i) {
+        var classes = this.className.split(/\s+/);
+        for (var i=0,len=classes.length; i<len; i++){
+            if ($('#visualisateur div div').hasClass(classes[i])){
+                // $(this).addClass('bodySharesClass');
+                console.log("ces phrases ont été écrites au même moment :)")
+            }
+        }
+    });
+}
 
 function upAndDown(){
     var scrolled=0;
@@ -208,7 +254,9 @@ function markdownToHtml(){
 
     function onClickHtml(event){
         changeTabs();
-        cleanHtml();
+        fakeTextarea();
+        addComment();
+        // cleanHtml();
         updateMarkdown();
     }
 
@@ -216,6 +264,18 @@ function markdownToHtml(){
         $(".html").addClass("active");
         $(".markdown").removeClass("active");
         $("#previewer").css('display', 'block');
+    }
+
+    function fakeTextarea(){
+        var htmlString = $("#pad_perso").val();
+        $("#fake").val(htmlString);
+    }
+
+    function addComment(){
+        var str = $("#fake").val();
+        var regexSlash = /^\/\//gi;
+        str = str.replace(regexSlash, ">"); 
+        $("#fake").val(str);
     }
 
     function cleanHtml(){
@@ -251,35 +311,41 @@ function markdownToHtml(){
 
 // Timeline
 function timerEvent() {
+
     var chrono = 0;
     var typingTimer;                //timer identifier
-    var doneTypingInterval = 5000;  //time in ms
-    var time = new Date();
+    var doneTypingInterval = 30000;  //time in ms
 
-    chrono = setInterval(function () {
-        var currentVal = $('#pad_perso').html();
-        $('#pad_perso').html(currentVal + "<span class='timer'>" + time.getHours() +":" + time.getMinutes() + ":" + time.getSeconds() + "</span>" + "<br>");
-        var scrolltext = $('#pad_perso');
-        scrolltext.scrollTop(scrolltext[0].scrollHeight - scrolltext.height());
-    }, doneTypingInterval);
+    doneTyping();
 
-    $('#pad_perso').keydown(function(event){
-            clearInterval(chrono);
-            clearTimeout(typingTimer);
-    });
+    // chrono = setInterval(function () {
+    //     var currentVal = $('#pad_perso').val();
+    //     $('#pad_perso').val(currentVal + "\n|\n");
+    //     $('#pad_perso').focus();
+    //     // placeCaretAtEnd( document.getElementById("pad_perso") );
+    //     var scrolltext = $('#pad_perso');
+    //     scrolltext.scrollTop(scrolltext[0].scrollHeight - scrolltext.height());
+    // }, doneTypingInterval);
 
     $('#pad_perso').keyup(function(){
         clearTimeout(typingTimer);
         typingTimer = setTimeout(doneTyping, doneTypingInterval);
     });
 
+    $('#pad_perso').keydown(function(event){
+        clearInterval(chrono);
+        clearTimeout(typingTimer);
+    });
+
     function doneTyping () {
         chrono = setInterval(function () {
-        var currentVal = $('#pad_perso').html();
-        $('#pad_perso').html(currentVal + "<span class='timer'>" + time.getHours() +":" + time.getMinutes() + ":" + time.getSeconds() + "</span>" + "<br>");
-        var scrolltext = $('#pad_perso');
-        scrolltext.scrollTop(scrolltext[0].scrollHeight - scrolltext.height());
-    }, doneTypingInterval);
+            var currentVal = $('#pad_perso').val();
+            $('#pad_perso').val(currentVal + "\n   |\n");
+            $('#pad_perso').focus();
+            // placeCaretAtEnd( document.getElementById("pad_perso") );
+            var scrolltext = $('#pad_perso');
+            scrolltext.scrollTop(scrolltext[0].scrollHeight - scrolltext.height());
+        }, doneTypingInterval);
     }
 }
 

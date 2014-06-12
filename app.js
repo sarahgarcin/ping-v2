@@ -70,10 +70,9 @@ io.sockets.on('connection', function (socket) {
     socket.on('user image', function (data) {
         var time = new Date();
         var ts = time.getHours() +"-" + time.getMinutes() + "-" + time.getSeconds();
-        var fileName = __dirname + '/public/images/' + socket.user + "_" + ts + ".jpg";
+        var fileName = __dirname + '/public/images/' + ts + "_" + socket.user + ".jpg";
 
         var imageBuffer = decodeBase64Image(data);
-        console.log(imageBuffer);
 
         fs.writeFile(fileName, imageBuffer.data, function (err) {
             console.info("write new file to " + fileName);
@@ -82,9 +81,10 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.emit('user image', socket.user, data);
     });
 
-    // socket.on('comment image', function (message){
-    //     socket.broadcast.emit('comment image', message);
-    // })
+    socket.on('comment image', function (message){
+        console.log('MESSAGE RECU ' + message);
+        io.sockets.emit('comment image', message);
+    });
 
     socket.on('disconnect', function (user) {
         for(var i=0; i<users.length; i++) {
