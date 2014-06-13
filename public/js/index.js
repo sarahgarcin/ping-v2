@@ -10,6 +10,7 @@ $(document).ready(function(){
     rechremp();
     markdownToHtml();
     upAndDown();
+    shareUrl();
     // syncCursor();
     // syncScroll();
 
@@ -93,12 +94,8 @@ $(document).ready(function(){
             var timestamp = new Date();
             var time = timestamp.getHours() +"-" + timestamp.getMinutes() + "-" + timestamp.getSeconds();
             socket.emit('sendnotes', {text: $('#pad_perso').val(), user:user, time:time});
-            // if(e.keyCode == 13){
-            //     var str = time;
-            //     var timeClass = str.substr(0,7);
-            //     $('#pad_perso div').last().addClass(time);
-            // }
         }
+
     });
 
     // Récupération de la valeur des textarea et se mettent dans le visualisateur prévu.
@@ -145,10 +142,20 @@ $(document).ready(function(){
     function image (from, base64Image) {  // décode le DataURl de l'image en base64Image
             $('#river').append($('<p>').append($('<b>').text(from), '</br><img src="' + base64Image + '"/><div class="comment"></div>'));       
             socket.on('comment image', function (message){ //ajout des commentaires
+                
+                var str = message;       
+                var regexUrl = /^(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/;
+                if(regexUrl){
+                    str = str.replace(regexUrl, "<a href='" + message + "'target='_blank'>" + message + "</a>");
+                    $(".comment").append(str); 
+                }
+                else{   
                     $(".comment").append(message);
-                    $(".comment").addClass("commentfull");
-                    $(".comment").removeClass("comment");
+                }
+                $(".comment").addClass("commentfull");
+                $(".comment").removeClass("comment");  
             });
+
             var scrollImage = $('#river');
             scrollImage.scrollTop(scrollImage[0].scrollHeight - scrollImage.height());
 
@@ -164,20 +171,88 @@ $(document).ready(function(){
         };
     
         reader.readAsDataURL(data);
-
     });
 
     function addComment(){
         $('#river').append('<button class="commenter">COMMENTER</button>');
         $(".commenter").click(function(){
-                $('.commenter').remove();
-                $('#river').append('<input type="text" class="commentInput commentI"></input></br><input type="submit" class="commentSubmit commentI"></input> ');
-                $(".commentSubmit").click(function(){
-                        socket.emit('comment image', $("input.commentInput").val());
-                        $("input.commentI").remove();
-                });
+            $('.commenter').remove();
+            $('#river').append('<input type="text" class="commentInput commentI"></input></br><input type="submit" class="commentSubmit commentI"></input> ');
+            $(".commentSubmit").click(function(){
+                socket.emit('comment image', $("input.commentInput").val());
+                $("input.commentI").remove();
+            });
         });
     }
+
+    socket.on('image url', function (from, data){
+        $('<img src="'+ data +'">').load(function() {
+            $($('<p>').append($('<b>').text(from), '</br><img src="'+ data +'"><div class="comment"></div>')).appendTo('#river');
+        }); 
+
+        socket.on('comment image', function (message){ //ajout des commentaires  
+            var str = message;       
+            var regexUrl = /^(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/;
+            if(regexUrl){
+                str = str.replace(regexUrl, "<a href='" + message + "'target='_blank'>" + message + "</a>");
+                $(".comment").append(str); 
+            }
+            else{   
+                $(".comment").append(message);
+            }
+            $(".comment").addClass("commentfull");
+            $(".comment").removeClass("comment");  
+        });
+
+        var scrollImage = $('#river');
+        scrollImage.scrollTop(scrollImage[0].scrollHeight - scrollImage.height());     
+
+    })
+
+
+    $('#submiturl').click(function(){
+        $('<img src="'+ $("#imageurl").val() +'">').load(function() {
+            $($('<p>').append($('<b>').text("moi"), '</br><img src="'+ $("#imageurl").val() +'"><div class="comment"></div>')).appendTo('#river');
+            socket.emit('image url', $("#imageurl").val());
+            addComment();
+        });
+    });
+
+    // $('#river').on('dragover', function(e) {e.preventDefault();return false;});
+    // $('#river').on('drop', function(e) {
+    //     e.preventDefault();
+    //     var data = e.originalEvent.dataTransfer.files[0];
+    //     var reader = new FileReader();      
+    //     reader.onload = function(evt){
+    //         image('moi', evt.target.result);
+    //         addComment();
+    //         socket.emit('user image', evt.target.result);
+    //     };
+    
+    //     reader.readAsDataURL(data);
+    //     // e.originalEvent.dataTransfer.items[0].getAsString(function(url){
+    //     //     img = '<img src="'+ url +'">';
+    //     //     img.onload = function () {
+    //     //         $($('<p>').append($('<b>').text("moi"), '</br><img src="'+ url +'"><div class="comment"></div>')).appendTo('#river');
+    //     //     };
+    //         // $('<img src="'+ url +'">').load(function () {
+    //         //     $($('<p>').append($('<b>').text("moi"), '</br><img src="'+ url +'"><div class="comment"></div>')).appendTo('#river');
+    //         // });
+    //     // addComment();
+    //     // socket.emit('image url', url); 
+
+    //     // });
+
+    // });
+        
+        
+            
+            // var imgPath = $("#imageurl").val(); 
+
+            // $('<img src="'+ imgPath +'">').load(function() {
+            //     $(this).appendTo('#river');
+            // })
+    // });
 
 });
 
@@ -347,6 +422,48 @@ function timerEvent() {
             scrolltext.scrollTop(scrolltext[0].scrollHeight - scrolltext.height());
         }, doneTypingInterval);
     }
+}
+
+function shareUrl(){
+
+    var text = $("#pad_perso").val(); 
+    var regexUrl = (/^(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/);   
+    while(text.match(regexUrl) !== null) {
+        console.log("pouet");
+        $("#river").append('<div class="urlHtml"></div>');
+        var newUrl = text.replace(regexUrl, "<a href='" + text + "'target='_blank'>" + text + "</a>");
+        $(".urlHtml").append(newUrl); 
+    }
+
+// var matchesUrl = [];
+
+//     $('#pad_perso').keyup(function(){
+//         var text = $("#pad_perso").val();      
+//         var regexUrl = /^(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/;
+//         var matches = text.match(regexUrl);
+//         matchesUrl.push(matches);
+
+//         for (i=0; i<matches.length; i++){
+//             console.log(matches[i]);
+//             $("#river").append('<div class="urlHtml"></div>');
+//             var newUrl = text.replace(regexUrl, "<a href='" + text + "'target='_blank'>" + text + "</a>");
+//             $(".urlHtml").append(newUrl); 
+//         } 
+
+        // if(oldUrl.match(regexUrl)){
+        //     $("#river").append('<div class="urlHtml"></div>');
+        //     var newUrl = oldUrl.replace(regexUrl, "<a href='" + oldUrl + "'target='_blank'>" + oldUrl + "</a>");
+        //     // var newUrl = oldUrl.replace(regexUrl, "caca");
+        //     $(".urlHtml").append(newUrl); 
+        // }
+        // else {
+
+        // }
+        // $(".urlHtml").addClass("urlHtmlfull");
+        // $(".urlHtml").removeClass("urlHtml"); 
+
+    //});
+
 }
 
 // Regex / abbréviations

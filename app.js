@@ -81,6 +81,11 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.emit('user image', socket.user, data);
     });
 
+    socket.on('image url', function (data){
+        console.log("CECI EST : " + data);
+        io.sockets.emit('image url', socket.user, data);
+    })
+
     socket.on('comment image', function (message){
         console.log('MESSAGE RECU ' + message);
         io.sockets.emit('comment image', message);
