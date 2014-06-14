@@ -94,7 +94,6 @@ io.sockets.on('connection', function (socket) {
                 request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
             });
         };
-
         download(data, fileName, function(){
             console.log('done');
         }); 
@@ -103,7 +102,10 @@ io.sockets.on('connection', function (socket) {
     })
 
     socket.on('comment image', function (message){
-        console.log('MESSAGE RECU ' + message);
+        var time = new Date();
+        var ts = time.getHours() +"-" + time.getMinutes() + "-" + time.getSeconds();
+        var fileName = __dirname + '/public/images/' + ts + "_" + socket.user + ".txt";
+        fs.writeFile(fileName, message);
         io.sockets.emit('comment image', message);
     });
 

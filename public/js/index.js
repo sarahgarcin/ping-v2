@@ -142,7 +142,7 @@ $(document).ready(function(){
     function image (from, base64Image) {  // décode le DataURl de l'image en base64Image
             $('#river').append($('<p>').append($('<b>').text(from), '</br><img src="' + base64Image + '"/><div class="comment"></div>'));       
             socket.on('comment image', function (message){ //ajout des commentaires
-                
+                //transforme les urls dans les commenataires en hyperliens
                 var str = message;       
                 var regexUrl = /^(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/;
                 if(regexUrl){
@@ -218,7 +218,7 @@ $(document).ready(function(){
     //     });
     // });
 
- 
+    // Drag and Drop Image from local Files 
     $("#river").on('dragover', function (e){
             e.preventDefault();
             e.stopPropagation();
@@ -246,7 +246,6 @@ $(document).ready(function(){
         }
         return false;
     });
-
 
     function upload(files) {
             var f = files[0];
@@ -290,6 +289,7 @@ $(document).ready(function(){
     
         // reader.readAsDataURL(data);
 
+    // Drag and Drop Images from Webpage
     $('#river').on('dragover', function(e) {e.preventDefault();return false;});
     $('#river').on('drop', function(e) {
         e.preventDefault();
