@@ -10,7 +10,7 @@ $(document).ready(function(){
     rechremp();
     markdownToHtml();
     upAndDown();
-    shareUrl();
+    // shareUrl();
     // syncScroll();
 
     $("#fake").crevasse({
@@ -417,14 +417,63 @@ function timerEvent() {
 
 function shareUrl(){
 
-    var text = $("#pad_perso").val(); 
-    var regexUrl = (/^(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/);   
-    while(text.match(regexUrl) !== null) {
-        console.log("pouet");
-        $("#river").append('<div class="urlHtml"></div>');
-        var newUrl = text.replace(regexUrl, "<a href='" + text + "'target='_blank'>" + text + "</a>");
-        $(".urlHtml").append(newUrl); 
-    }
+    $('#pad_perso').keyup(function (e){
+        var textUrl = $('#pad_perso').val(); 
+        var regexUrl = /(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/gi;
+        if(regexUrl.test(textUrl)){
+            $("#river").append("<div class='url'></div>");
+            $("#river .url").append(textUrl);
+            // $("#river").html(textUrl);
+        }
+    });
+
+    $('#river').bind('change', function(){
+        console.log("Change");
+        var textUrl = $('#river').text(); 
+        var regexUrl = /(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/gi;
+
+        var newUrl = textUrl.replace(regexUrl, '<a href="'+ textUrl +'" target="_blank">' + textUrl + '</a>');
+        $("#river").html(newUrl);
+    });
+
+    // $('#pad_perso').change(function (e){
+    //     var textUrl = $(this).val(); 
+    //     var regexUrl = /(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/gi;
+
+    //     if(regexUrl.test(textUrl)){
+    //         var newUrl = textUrl.replace(regexUrl, '<a href="'+textUrl+'" target="_blank">' + textUrl + '</a>');
+    //         var matches = [];
+    //         matches.push(newUrl);
+    //         for(i=0; i<matches.length; i++){
+    //             // console.log(matches[0]);
+    //             $('#river').append(matches[0]);
+    //         }
+    //     }
+    // });
+    //         var text = $("#pad_perso").val(); 
+    //         var regexUrl = (/^(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/gi);
+    //         // var matches = regexUrl.match(text);
+    //         var newUrl = text.replace(regexUrl, '<a href="' + text + '" target="_blank">' + text + '</a>');
+    //         $(this).val(newUrl);
+    //         //     $('#river').html(newUrl)
+
+    //         // if(regexUrl.test(text)){
+    //         //     console.log(text);
+    //         //     var newUrl = text.replace(regexUrl, '<a href="' + text + '" target="_blank">' + text + '</a>');
+    //         //     $('#river').html(newUrl);
+    //         // }
+
+    // });
+
+    // var text = $("#pad_perso").val(); 
+    // var regexUrl = (/^(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/);   
+
+    // while(text.match(regexUrl)) {
+    //     console.log("pouet");
+    //     $("#river").append('<div class="urlHtml"></div>');
+    //     var newUrl = text.replace(regexUrl, "<a href='" + text + "'target='_blank'>" + text + "</a>");
+    //     $(".urlHtml").append(newUrl); 
+    // }
 
 // var matchesUrl = [];
 
@@ -461,6 +510,7 @@ function shareUrl(){
 function rechremp() {
 
     $('#pad_perso').keyup(function(event){
+
         var oldtxt = $(this).val();
         var regex = /\bbcp\b /ig;
         var newtxt = oldtxt.replace(regex, 'beaucoup ');
