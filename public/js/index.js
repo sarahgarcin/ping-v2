@@ -11,7 +11,6 @@ $(document).ready(function(){
     markdownToHtml();
     upAndDown();
     shareUrl();
-    // syncCursor();
     // syncScroll();
 
     $("#fake").crevasse({
@@ -34,15 +33,6 @@ $(document).ready(function(){
         $('#connected').html('Contributeurs: ' + data);
     })
 
-    // socket.on('update', function (users){
-    //     userList = users;
-    //     $('#user').empty();
-    //     for(var i=0; i<userList.length; i++) {
-    //         $('#user').append("<h1>" + userList[i] + "</h1>");
-    //     }
-
-    // });
-
     // Fait apparaître son visualisateur à chaque connection de user
     socket.on('update', function (users){
         userList = users;
@@ -54,24 +44,6 @@ $(document).ready(function(){
         }
 
     });
-
-    // var twice = 0;
-    // $("#pad_perso").keyup(function (e){
-    //     if(e.keyCode == 13){
-    //         twice +=1;
-
-    //         if(twice == 1 && e.keyCode !== 13){
-    //             twice=0;
-    //         }
-
-    //         if(twice == 2){
-    //             var time = new Date();
-    //             var currentVal = $("#pad_perso").val();
-    //             $("#pad_perso").val( currentVal + time.getHours() +":" + time.getMinutes() + ":" + time.getSeconds() + "  " + "\n");
-    //             twice = 0;
-    //         }
-    //     }
-    // });
 
     // $("#pad_perso").keyup(function(){
     //     var string = $("#pad_perso").val();
@@ -95,7 +67,6 @@ $(document).ready(function(){
             var time = timestamp.getHours() +"-" + timestamp.getMinutes() + "-" + timestamp.getSeconds();
             socket.emit('sendnotes', {text: $('#pad_perso').val(), user:user, time:time});
         }
-
     });
 
     // Récupération de la valeur des textarea et se mettent dans le visualisateur prévu.
@@ -158,20 +129,63 @@ $(document).ready(function(){
 
             var scrollImage = $('#river');
             scrollImage.scrollTop(scrollImage[0].scrollHeight - scrollImage.height());
-
     }
 
+    // Image from "Partager les images" input
     $('#imagefile').bind('change', function(e){
-        var data = e.originalEvent.target.files[0];
-        var reader = new FileReader();      
-        reader.onload = function(evt){
-            image('moi', evt.target.result);
-            addComment();
-            socket.emit('user image', evt.target.result);
-        };
-    
-        reader.readAsDataURL(data);
+        upload(e.originalEvent.target.files);
     });
+
+    // Add images with Drag and Drop from local Files and from Web Page
+    $("#river").on('dragover', function (e){
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+    });
+ 
+    $("#river").on('dragleave', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+    });
+
+    $("#river").on('drop', function (e) {
+        // Stop the propagation of the event
+        e.preventDefault();
+        e.stopPropagation();
+        if(e.originalEvent.dataTransfer){
+            if(e.originalEvent.dataTransfer.files.length) { //Drag and Drop from Local Files
+                // Main function to upload
+                upload(e.originalEvent.dataTransfer.files);
+            }
+            else {
+                e.originalEvent.dataTransfer.items[0].getAsString(function(url){ // Drag and Drop from webpage
+                    img = '<img src="'+ url +'">';
+                    $($('<p>').append($('<b>').text("moi"), '</br><img src="'+ url +'"><div class="comment"></div>')).appendTo('#river');
+                    addCommentFromWeb();
+                    socket.emit('image url', url); 
+                });
+            }  
+        }
+        else {
+
+        }
+        return false;
+    });
+
+    function upload(files) {
+            var f = files[0];
+            // Only process image files.
+            var reader = new FileReader();
+            // When the image is loaded,
+            reader.onload = function(evt){
+                image('moi', evt.target.result);
+                addComment();
+            socket.emit('user image', evt.target.result);
+            };
+            // Read in the image file as a data URL.
+            reader.readAsDataURL(f);            
+    }
 
     function addComment(){
         $('#river').append('<button class="commenter">COMMENTER</button>');
@@ -180,6 +194,30 @@ $(document).ready(function(){
             $('#river').append('<input type="text" class="commentInput commentI"></input></br><input type="submit" class="commentSubmit commentI"></input> ');
             $(".commentSubmit").click(function(){
                 socket.emit('comment image', $("input.commentInput").val());
+                $("input.commentI").remove();
+            });
+        });
+    }
+
+    function addCommentFromWeb(){
+        $('#river').append('<button class="commenter">COMMENTER</button>');
+        $(".commenter").click(function(){
+            $('.commenter').remove();
+            $('#river').append('<input type="text" class="commentInput commentI"></input></br><input type="submit" class="commentSubmit commentI"></input> ');
+            $(".commentSubmit").click(function(){
+                var comment = $("input.commentInput").val();       
+                var regexUrl = /^(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/;
+                if(regexUrl){
+                    str = comment.replace(regexUrl, "<a href='" + comment + "'target='_blank'>" + comment + "</a>");
+                    $(".comment").append(str); 
+                }
+                else{   
+                    $(".comment").append(comment);
+                }
+                $(".comment").addClass("commentfull");
+                $(".comment").removeClass("comment");
+                
+                socket.emit('comment imageWeb', comment);
                 $("input.commentI").remove();
             });
         });
@@ -207,7 +245,7 @@ $(document).ready(function(){
         var scrollImage = $('#river');
         scrollImage.scrollTop(scrollImage[0].scrollHeight - scrollImage.height());     
 
-    })
+    });
 
 
     // $('#submiturl').click(function(){
@@ -216,104 +254,6 @@ $(document).ready(function(){
     //         socket.emit('image url', $("#imageurl").val());
     //         addComment();
     //     });
-    // });
-
-    // Drag and Drop Image from local Files 
-    $("#river").on('dragover', function (e){
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-    });
- 
-    $("#river").on('dragleave', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-    });
-
-    $("#river").on('drop', function (e) {
-        // Stop the propagation of the event
-        e.preventDefault();
-        e.stopPropagation();
-        if(e.originalEvent.dataTransfer){
-            if(e.originalEvent.dataTransfer.files.length) {
-                // Main function to upload
-                upload(e.originalEvent.dataTransfer.files);
-            }  
-        }
-        else {
-
-        }
-        return false;
-    });
-
-    function upload(files) {
-            var f = files[0];
-            console.log(f);
-            // Only process image files.
-            var reader = new FileReader();
-            // When the image is loaded,
-            reader.onload = function(evt){
-                image('moi', evt.target.result);
-                addComment();
-            socket.emit('user image', evt.target.result);
-            };
-            // Read in the image file as a data URL.
-            reader.readAsDataURL(f);            
-    }
-
-
-    // $('#river').on('drop', function(e) {
-    //     e.preventDefault();
-    //     var data = e.originalEvent.dataTransfer.items[0];
-    //     var reader = new FileReader();      
-    //     reader.onload = function(evt){
-    //         image('moi', evt.target.result);
-    //         addComment();
-    //         // socket.emit('user image', evt.target.result);
-    //     };
-    
-    //     reader.readAsDataURL(data);
-    // });
-
-    // $('#river').on('dragover', function(e) {e.preventDefault();return false;});
-    // $('#river').on('drop', function(e) {
-        // e.preventDefault();
-        // var data = e.originalEvent.dataTransfer.files[0];
-        // var reader = new FileReader();      
-        // reader.onload = function(evt){
-        //     image('moi', evt.target.result);
-        //     addComment();
-        //     socket.emit('user image', evt.target.result);
-        // };
-    
-        // reader.readAsDataURL(data);
-
-    // Drag and Drop Images from Webpage
-    $('#river').on('dragover', function(e) {e.preventDefault();return false;});
-    $('#river').on('drop', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.originalEvent.dataTransfer.items[0].getAsString(function(url){
-            img = '<img src="'+ url +'">';
-            $($('<p>').append($('<b>').text("moi"), '</br><img src="'+ url +'"><div class="comment"></div>')).appendTo('#river');
-            // $('<img src="'+ url +'">').load(function () {
-            //     $($('<p>').append($('<b>').text("moi"), '</br><img src="'+ url +'"><div class="comment"></div>')).appendTo('#river');
-            // });
-            addComment();
-            socket.emit('image url', url); 
-
-        });
-
-    });
-        
-        
-            
-            // var imgPath = $("#imageurl").val(); 
-
-            // $('<img src="'+ imgPath +'">').load(function() {
-            //     $(this).appendTo('#river');
-            // })
     // });
 
 });
@@ -334,19 +274,6 @@ function placeCaretAtEnd(el) {
         textRange.collapse(false);
         textRange.select();
     }
-}
-
-function syncCursor(){
-    $('#pad_perso div').each(
-    function(i) {
-        var classes = this.className.split(/\s+/);
-        for (var i=0,len=classes.length; i<len; i++){
-            if ($('#visualisateur div div').hasClass(classes[i])){
-                // $(this).addClass('bodySharesClass');
-                console.log("ces phrases ont été écrites au même moment :)")
-            }
-        }
-    });
 }
 
 function upAndDown(){
