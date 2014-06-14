@@ -242,7 +242,7 @@ $(document).ready(function(){
             }  
         }
         else {
-            
+
         }
         return false;
     });
@@ -297,7 +297,6 @@ $(document).ready(function(){
         e.originalEvent.dataTransfer.items[0].getAsString(function(url){
             img = '<img src="'+ url +'">';
             $($('<p>').append($('<b>').text("moi"), '</br><img src="'+ url +'"><div class="comment"></div>')).appendTo('#river');
-            console.log(img);
             // $('<img src="'+ url +'">').load(function () {
             //     $($('<p>').append($('<b>').text("moi"), '</br><img src="'+ url +'"><div class="comment"></div>')).appendTo('#river');
             // });

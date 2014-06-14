@@ -5,6 +5,7 @@ var io = require('socket.io').listen(http); // création d'un objet app avec exp
 
 var config  = require('./config');
 var fs = require('fs');
+var request = require('request');
 
 /*
 * Server config
@@ -82,7 +83,22 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('image url', function (data){
-        console.log("CECI EST : " + data);
+        var time = new Date();
+        var ts = time.getHours() +"-" + time.getMinutes() + "-" + time.getSeconds();
+        var fileName = __dirname + '/public/images/' + ts + "_" + socket.user + ".jpg";
+        var download = function(uri, filename, callback){
+            request.head(uri, function(err, res, body){
+                console.log('content-type:', res.headers['content-type']);
+                console.log('content-length:', res.headers['content-length']);
+
+                request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+            });
+        };
+
+        download(data, fileName, function(){
+            console.log('done');
+        }); 
+
         socket.broadcast.emit('image url', socket.user, data);
     })
 
