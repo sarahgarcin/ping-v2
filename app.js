@@ -83,7 +83,7 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('image url', function (data){
         console.log("CECI EST : " + data);
-        io.sockets.emit('image url', socket.user, data);
+        socket.broadcast.emit('image url', socket.user, data);
     })
 
     socket.on('comment image', function (message){

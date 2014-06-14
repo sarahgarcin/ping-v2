@@ -361,7 +361,7 @@ div.filebutton {
 
 #river button.commenter {
   font-family: "ume_balsa", serif;
-  color: #1A22FA;;
+  color: #1A22FA;
   border: 1px solid #1A22FA;
   background: none;
   margin-top: 10px;
@@ -399,7 +399,8 @@ div.filebutton {
   text-decoration: none;
   display: inline-block;
   margin-right: 30px;
-  font-size: 15px;
+  padding: 2px 10px;
+  font-size: 18px;
 
 }
 

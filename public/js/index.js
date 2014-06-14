@@ -210,40 +210,103 @@ $(document).ready(function(){
     })
 
 
-    $('#submiturl').click(function(){
-        $('<img src="'+ $("#imageurl").val() +'">').load(function() {
-            $($('<p>').append($('<b>').text("moi"), '</br><img src="'+ $("#imageurl").val() +'"><div class="comment"></div>')).appendTo('#river');
-            socket.emit('image url', $("#imageurl").val());
-            addComment();
-        });
+    // $('#submiturl').click(function(){
+    //     $('<img src="'+ $("#imageurl").val() +'">').load(function() {
+    //         $($('<p>').append($('<b>').text("moi"), '</br><img src="'+ $("#imageurl").val() +'"><div class="comment"></div>')).appendTo('#river');
+    //         socket.emit('image url', $("#imageurl").val());
+    //         addComment();
+    //     });
+    // });
+
+ 
+    $("#river").on('dragover', function (e){
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+    });
+ 
+    $("#river").on('dragleave', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
     });
 
-    // $('#river').on('dragover', function(e) {e.preventDefault();return false;});
+    $("#river").on('drop', function (e) {
+        // Stop the propagation of the event
+        e.preventDefault();
+        e.stopPropagation();
+        if(e.originalEvent.dataTransfer){
+            if(e.originalEvent.dataTransfer.files.length) {
+                // Main function to upload
+                upload(e.originalEvent.dataTransfer.files);
+            }  
+        }
+        else {
+            
+        }
+        return false;
+    });
+
+
+    function upload(files) {
+            var f = files[0];
+            console.log(f);
+            // Only process image files.
+            var reader = new FileReader();
+            // When the image is loaded,
+            reader.onload = function(evt){
+                image('moi', evt.target.result);
+                addComment();
+            socket.emit('user image', evt.target.result);
+            };
+            // Read in the image file as a data URL.
+            reader.readAsDataURL(f);            
+    }
+
+
     // $('#river').on('drop', function(e) {
     //     e.preventDefault();
-    //     var data = e.originalEvent.dataTransfer.files[0];
+    //     var data = e.originalEvent.dataTransfer.items[0];
     //     var reader = new FileReader();      
     //     reader.onload = function(evt){
     //         image('moi', evt.target.result);
     //         addComment();
-    //         socket.emit('user image', evt.target.result);
+    //         // socket.emit('user image', evt.target.result);
     //     };
     
     //     reader.readAsDataURL(data);
-    //     // e.originalEvent.dataTransfer.items[0].getAsString(function(url){
-    //     //     img = '<img src="'+ url +'">';
-    //     //     img.onload = function () {
-    //     //         $($('<p>').append($('<b>').text("moi"), '</br><img src="'+ url +'"><div class="comment"></div>')).appendTo('#river');
-    //     //     };
-    //         // $('<img src="'+ url +'">').load(function () {
-    //         //     $($('<p>').append($('<b>').text("moi"), '</br><img src="'+ url +'"><div class="comment"></div>')).appendTo('#river');
-    //         // });
-    //     // addComment();
-    //     // socket.emit('image url', url); 
-
-    //     // });
-
     // });
+
+    // $('#river').on('dragover', function(e) {e.preventDefault();return false;});
+    // $('#river').on('drop', function(e) {
+        // e.preventDefault();
+        // var data = e.originalEvent.dataTransfer.files[0];
+        // var reader = new FileReader();      
+        // reader.onload = function(evt){
+        //     image('moi', evt.target.result);
+        //     addComment();
+        //     socket.emit('user image', evt.target.result);
+        // };
+    
+        // reader.readAsDataURL(data);
+
+    $('#river').on('dragover', function(e) {e.preventDefault();return false;});
+    $('#river').on('drop', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.originalEvent.dataTransfer.items[0].getAsString(function(url){
+            img = '<img src="'+ url +'">';
+            $($('<p>').append($('<b>').text("moi"), '</br><img src="'+ url +'"><div class="comment"></div>')).appendTo('#river');
+            console.log(img);
+            // $('<img src="'+ url +'">').load(function () {
+            //     $($('<p>').append($('<b>').text("moi"), '</br><img src="'+ url +'"><div class="comment"></div>')).appendTo('#river');
+            // });
+            addComment();
+            socket.emit('image url', url); 
+
+        });
+
+    });
         
         
             
@@ -349,7 +412,9 @@ function markdownToHtml(){
     function addComment(){
         var str = $("#fake").val();
         var regexSlash = /^\/\//gi;
-        str = str.replace(regexSlash, ">"); 
+        var regexBreak = /\n/gi;
+        str = str.replace(regexSlash, ">");
+        str = str.replace(regexBreak, "  \n"); 
         $("#fake").val(str);
     }
 
