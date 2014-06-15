@@ -131,6 +131,12 @@ $(document).ready(function(){
             scrollImage.scrollTop(scrollImage[0].scrollHeight - scrollImage.height());
     }
 
+    function imageLocal (from, base64Image) {  // décode le DataURl de l'image en base64Image
+            $('#river').append($('<p>').append($('<b>').text(from), '</br><img src="' + base64Image + '"/>'));       
+            var scrollImage = $('#river');
+            scrollImage.scrollTop(scrollImage[0].scrollHeight - scrollImage.height());
+    }
+
     // Image from "Partager les images" input
     $('#imagefile').bind('change', function(e){
         upload(e.originalEvent.target.files);
@@ -161,7 +167,7 @@ $(document).ready(function(){
             else {
                 e.originalEvent.dataTransfer.items[0].getAsString(function(url){ // Drag and Drop from webpage
                     img = '<img src="'+ url +'">';
-                    $($('<p>').append($('<b>').text("moi"), '</br><img src="'+ url +'"><div class="comment"></div>')).appendTo('#river');
+                    $($('<p>').append($('<b>').text("moi"), '</br><img src="'+ url +'">')).appendTo('#river');
                     addCommentFromWeb();
                     socket.emit('image url', url); 
                 });
@@ -179,7 +185,7 @@ $(document).ready(function(){
             var reader = new FileReader();
             // When the image is loaded,
             reader.onload = function(evt){
-                image('moi', evt.target.result);
+                imageLocal('moi', evt.target.result);
                 addComment();
             socket.emit('user image', evt.target.result);
             };
@@ -188,12 +194,25 @@ $(document).ready(function(){
     }
 
     function addComment(){
-        $('#river').append('<button class="commenter">COMMENTER</button>');
+        $('#river p:last-child').append('<button class="commenter">COMMENTER</button>');
         $(".commenter").click(function(){
-            $('.commenter').remove();
-            $('#river').append('<input type="text" class="commentInput commentI"></input></br><input type="submit" class="commentSubmit commentI"></input> ');
+            $(this).parent().append('<input type="text" class="commentInput commentI"></input></br><input type="submit" class="commentSubmit commentI"></input> ');
+            $(this).remove();
             $('#river .commentInput').focus();
             $(".commentSubmit").click(function(){
+                $(this).parent().append('<div class="comment"></div>');
+                var comment = $("input.commentInput").val();       
+                var regexUrl = /^(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/;
+                if(regexUrl){
+                    str = comment.replace(regexUrl, "<a href='" + comment + "'target='_blank'>" + comment + "</a>");
+                    $(".comment").append(str); 
+                }
+                else{   
+                    $(".comment").append(comment);
+                }
+                $(".comment").addClass("commentfull");
+                $(".comment").removeClass("comment");
+
                 socket.emit('comment image', $("input.commentInput").val());
                 $("input.commentI").remove();
             });
@@ -201,12 +220,13 @@ $(document).ready(function(){
     }
 
     function addCommentFromWeb(){
-        $('#river').append('<button class="commenter">COMMENTER</button>');
+        $('#river p:last-child').append('<button class="commenter">COMMENTER</button>');
         $(".commenter").click(function(){
-            $('.commenter').remove();
-            $('#river').append('<input type="text" class="commentInput commentI"></input></br><input type="submit" class="commentSubmit commentI"></input> ');
+            $(this).parent().append('<input type="text" class="commentInput commentI"></input></br><input type="submit" class="commentSubmit commentI"></input> ');
+            $(this).remove();
             $('#river .commentInput').focus();
             $(".commentSubmit").click(function(){
+                $(this).parent().append('<div class="comment"></div>');
                 var comment = $("input.commentInput").val();       
                 var regexUrl = /^(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/;
                 if(regexUrl){
@@ -227,7 +247,7 @@ $(document).ready(function(){
 
     socket.on('image url', function (from, data){
         $('<img src="'+ data +'">').load(function() {
-            $($('<p>').append($('<b>').text(from), '</br><img src="'+ data +'"><div class="comment"></div>')).appendTo('#river');
+            $($('<p>').append($('<b>').text(from), '</br><img src="'+ data +'"><div class="comment'+from+'"></div>')).appendTo('#river');
         }); 
 
         socket.on('comment image', function (message){ //ajout des commentaires  
@@ -235,13 +255,13 @@ $(document).ready(function(){
             var regexUrl = /^(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/;
             if(regexUrl){
                 str = str.replace(regexUrl, "<a href='" + message + "'target='_blank'>" + message + "</a>");
-                $(".comment").append(str); 
+                $('.comment'+from).append(str); 
             }
             else{   
-                $(".comment").append(message);
+                $(".comment"+from).append(message);
             }
-            $(".comment").addClass("commentfull");
-            $(".comment").removeClass("comment");  
+            $(".comment"+from).addClass("commentfull");
+            $(".comment"+from).removeClass("comment"+from);  
         });
 
         var scrollImage = $('#river');

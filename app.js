@@ -107,7 +107,7 @@ io.sockets.on('connection', function (socket) {
         var ts = time.getHours() +"-" + time.getMinutes() + "-" + time.getSeconds();
         var fileName = __dirname + '/public/images/' + ts + "_" + socket.user + ".txt";
         fs.writeFile(fileName, message);
-        io.sockets.emit('comment image', message);
+        socket.broadcast.emit('comment image', message);
     });
 
     socket.on('comment imageWeb', function (comment){
