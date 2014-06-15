@@ -192,6 +192,7 @@ $(document).ready(function(){
         $(".commenter").click(function(){
             $('.commenter').remove();
             $('#river').append('<input type="text" class="commentInput commentI"></input></br><input type="submit" class="commentSubmit commentI"></input> ');
+            $('#river .commentInput').focus();
             $(".commentSubmit").click(function(){
                 socket.emit('comment image', $("input.commentInput").val());
                 $("input.commentI").remove();
@@ -204,6 +205,7 @@ $(document).ready(function(){
         $(".commenter").click(function(){
             $('.commenter').remove();
             $('#river').append('<input type="text" class="commentInput commentI"></input></br><input type="submit" class="commentSubmit commentI"></input> ');
+            $('#river .commentInput').focus();
             $(".commentSubmit").click(function(){
                 var comment = $("input.commentInput").val();       
                 var regexUrl = /^(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/;

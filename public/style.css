@@ -123,7 +123,7 @@ textarea, #padperso {
 
 #content .pad #pad_perso{
   width:37%;
-  height:600px;
+  height:610px;
   float:left; 
   margin-left:0px; 
   margin-top:0px;
@@ -283,6 +283,7 @@ textarea, #padperso {
     float:left; 
     border-top: 1px dotted #1A22FA;
     border-bottom: 1px dotted #1A22FA;
+    padding-top: 10px;
     background-image: -webkit-gradient(
   linear,
   left top,
@@ -300,14 +301,17 @@ background-image: linear-gradient(to right, #FFFFFF 0%, #C6C6C6 100%);
 
 .common #river img{
     width:200px;
+    margin-top: 5px;
 }
 
 .common #river p{
     margin-left: 15px;
-    margin-bottom: 5px;
+/*    margin-bottom: 5px;*/
     font-family: 'ume', serif;
     font-size: 13px;
     letter-spacing: 1px;
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
 }
 
 .common #river b{
@@ -365,16 +369,38 @@ div.filebutton {
   border: 1px solid #1A22FA;
   background: none;
   margin-top: 10px;
+  margin-left: 15px;
   cursor: pointer;
 }
 
 #river input.commentinput {
-  width:220px;
-  font-family: "ume_balsa", serif;
+  width:200px;
+  height:20px;
+  outline: 0;
+  font-family: "ume", serif;
+  font-size: 13px;
+  letter-spacing: 0.05em;
   border: 1px solid #1A22FA;
   background: none;
   margin-top: 10px;
   margin-left: 15px;
+}
+
+#river input.commentSubmit{
+  font-family: "ume_balsa", serif;
+  color: #1A22FA;
+  border: 1px solid #1A22FA;
+  background: none;
+  margin-top: 5px;
+  margin-left: 15px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+#river .commentfull{
+  margin-top: 10px;
+  width:200px;
+  line-height: 1.3em;
 }
 
 /* --------- VISUALISATEURS ----------- */
@@ -438,4 +464,6 @@ div.filebutton {
  color:#545454;
  font-family: "ume", serif;
  letter-spacing: 1px;
+ padding-top: 5px;
+ padding-bottom: 5px;
 }

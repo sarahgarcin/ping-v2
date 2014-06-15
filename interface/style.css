@@ -40,8 +40,18 @@
          url('fonts/ume-p-mincho-webfont.ttf') format('truetype'),
          url('fonts/ume-p-mincho-webfont.svg#ume_p_minchoregular') format('svg');
     font-weight: normal;
+    font-style: normal; 
+}
+
+@font-face {
+    font-family: 'ume_balsa';
+    src: url('fonts/ume-p-gothic_balsa-webfont.eot');
+    src: url('fonts/ume-p-gothic_balsa-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/ume-p-gothic_balsa-webfont.woff') format('woff'),
+         url('fonts/ume-p-gothic_balsa-webfont.ttf') format('truetype'),
+         url('fonts/ume-p-gothic_balsa-webfont.svg#ume_p_gothic_balsaregular') format('svg');
+    font-weight: normal;
     font-style: normal;
- 
 }
  
 body {
@@ -119,10 +129,16 @@ a:hover{
     margin-top: 20px;
     font-family: 'ume', serif;
 }
+
+.menu .title_part{
+    font-family: 'ume_balsa', serif;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-decoration: underline;
+}
  
 .units-row{
-    margin:auto;
- 
+    margin:auto; 
 }
  
 .create {
@@ -138,6 +154,13 @@ a:hover{
     background: #1A22FA;
     font-family: 'ume', serif;
     color:#FFF;
+    border-radius: 0;
+}
+
+.create button:hover{
+    background: #FFF;
+    color:#1A22FA;
+    border: 1px solid #1A22FA;
 }
  
 .search {
@@ -153,6 +176,14 @@ a:hover{
     background: #1A22FA;
     font-family: 'ume', serif;
     color:#FFF;
+    border-radius: 0;
+}
+
+.search a:hover{
+    background: #FFF;
+    color:#1A22FA;
+    border: 1px solid #1A22FA;
+    text-decoration: none;
 }
  
 .filtreDate{
@@ -196,8 +227,21 @@ a:hover{
     font-size: 13px;
 }
 
+.result span.votefav{
+    color:#000;
+    font-family: "ume_balsa", sans-serif;
+    text-transform: uppercase;
+    font-size: 10px
+}
+
 .abreviations {
     margin-top: 20px;
+}
+
+.abreviations p{
+    font-family: "ume_balsa", sans-serif;
+    text-transform: uppercase;
+    font-size: 10px;
 }
 
 .abreviations li{
@@ -209,6 +253,19 @@ a:hover{
     padding:1px 10px;
     margin-right: 20px;
     margin-bottom:6px;
+}
+
+.abreviations input {
+    font-family: 'interval', monospace;
+    font-weight: normal;
+    background: #FFF;
+    width:150px;
+    height:22px;
+    border: 1px solid #1A22FA;
+    padding:1px 10px;
+    margin-right: 20px;
+    margin-bottom:6px;
+    outline:0;
 }
 
 .arrow1{
@@ -237,37 +294,48 @@ a:hover{
     position:absolute;
     top:230px;
     left:160px;
-
 }
 
 .sommaire {
     position: fixed;
+    z-index: -10;
 }
 
 .sommaire ul{
-    margin-top: 40px;
+    margin-top: 63px;
+    margin-left:0;
 }
 
 .sommaire li{
     list-style: none;
-    font-family: 'ume', serif;
-    font-size: 13px;
+    font-family: 'ume_balsa', serif;
+    font-size: 12px;
     text-transform: uppercase;
+    line-height: 1.5em;
+    letter-spacing: 0.1em;
+}
+
+.sommaire li.souspartie{
+    padding-left: 30px;
 }
 
 .units-row .ping_html{
     margin-left: 0px;
+    padding-right: 80px;
 }
 
 .ping_html {
     font-family: 'interval', monospace;
     font-size: 13px;
+    margin-top: 20px;
     margin-bottom: 60px;
 }
 
 .ping_html p{
     font-family: 'interval', monospace;
-    font-size: 13px;
+    font-size: 11px;
+    letter-spacing: -0.05em;
+    word-spacing: -0.03em;
     -webkit-margin-before: 6px;
     -webkit-margin-after: 1em;
     -webkit-margin-start: 0px;
@@ -277,41 +345,118 @@ a:hover{
 .ping_html h1{
     font-family: 'interval', monospace;
     text-transform: uppercase;
-    font-size: 1.75em;
+    font-size: 1.5em;
     font-weight: bold;
-    letter-spacing: 0.1em;
-    -webkit-margin-after: 6px;
-    -webkit-margin-before: 0.67em;
+/*    letter-spacing: 0.1em;*/
+    -webkit-margin-after: 15px;
+    -webkit-margin-before: 15px;
 }
 
 .ping_html h2{
     font-family: 'interval', monospace;
-    font-size: 1.5em;
+    font-size: 1.3em;
     text-transform: uppercase;
     font-weight: bold;
-    letter-spacing: 0.1em;
-    -webkit-margin-before: 0.83em;
-    -webkit-margin-after: 6px;
+/*    letter-spacing: 0.1em;*/
+    -webkit-margin-after: 15px;
+    -webkit-margin-before: 15px;
 }
 
 .ping_html h3{
     font-family: 'interval', monospace;
     text-transform: uppercase;
-    font-size: 1.17em;
+    font-size: 1.1em;
     font-weight: normal;
-    letter-spacing: 0.05em;
-    -webkit-margin-before: 1em;
-    -webkit-margin-after: 6px;
+/*    letter-spacing: 0.01em;*/
+    -webkit-margin-after: 15px;
+    -webkit-margin-before: 15px;
+}
+
+.ping_html a{
+    font-size: 11px;
+    line-height: 11px;
 }
 
 .pad_redige{
     margin-top: 20px;
 }
 
+.prev-next {
+    font-family: "ume_balsa", sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+}
+
+.prev-next .precedent{
+    margin-left: -110px;
+}
+
+.prev-next .suivant{
+    margin-left: 450px;
+}
+
 .prev-next a{
     margin-right: 310px;
 }
 
+.ume {
+    font-family: "ume", serif;
+    font-size: 13px;
+}
+
 .up-down{
+    font-family: "ume_balsa", sans-serif;
     margin-top: 10px;
+}
+
+.up-down span{
+    padding:10px;
+}
+
+.commentaire {
+    background: #F4F4F4;
+    border: 1px solid #1A22FA;
+    padding:10px;
+    margin-top: 270px;
+}
+
+.commentaire1 {
+    display:none;
+}
+
+.commentaire .pseudo{
+    text-decoration: underline;
+    margin-bottom: 10px;
+}
+
+.commentaire .commenter button{
+    font-family: "ume_balsa", sans-serif;
+    background: #F4F4F4;
+    border: 1px solid #1A22FA;
+    color: #1A22FA;
+}
+
+span.comment1{
+    background-image: -webkit-gradient(
+    linear,
+    right bottom,
+    left bottom,
+    color-stop(0, #C6C6C6),
+    color-stop(0.2, #FFFFFF),
+    color-stop(0.81, #FFFFFF),
+    color-stop(1, #C6C6C6)
+);
+background-image: -o-linear-gradient(left, #C6C6C6 0%, #FFFFFF 20%, #FFFFFF 81%, #C6C6C6 100%);
+background-image: -moz-linear-gradient(left, #C6C6C6 0%, #FFFFFF 20%, #FFFFFF 81%, #C6C6C6 100%);
+background-image: -webkit-linear-gradient(left, #C6C6C6 0%, #FFFFFF 20%, #FFFFFF 81%, #C6C6C6 100%);
+background-image: -ms-linear-gradient(left, #C6C6C6 0%, #FFFFFF 20%, #FFFFFF 81%, #C6C6C6 100%);
+background-image: linear-gradient(to left, #C6C6C6 0%, #FFFFFF 20%, #FFFFFF 81%, #C6C6C6 100%);
+}
+
+span.plus{
+    font-size: 16px;
+    margin-left: -15px;
+    margin-right: 7px;
+    color:#1A22FA;
+    cursor: pointer;
 }

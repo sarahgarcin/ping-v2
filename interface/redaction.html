@@ -8,6 +8,9 @@
 	<link rel="stylesheet" href="style.css" type="text/css"/>
 </head>
 <body>
+
+    <script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="js/script.js" type="text/javascript"></script>
  
 <div class="header">
     <div class="accueil">
@@ -38,30 +41,41 @@
  
 <div class="units-row">
 	<div class="menu unit-30">
-		<u>SOMMAIRE</u>
+		<div class="title_part">SOMMAIRE</div>
  
     		<div class="sommaire">
                 <ul>
-                    <li>La Génèse</li>
-                    <li>Rencontre avec 81 femmes</li>
-                    <li>Écrit un livre!</li>
-                    <li>Fais de la musique</li>
-                    <li>Aimer</li>
-                    <li>Voyage</li>
+                    <li>1. La Genese</li>
+                    <li>2. Rencontre avec 81 femmes</li>
+                    <li>3. ecrit un livre!</li>
+                    <li>4. Fais de la musique</li>
+                    <li class="souspartie">4.1. Aimer</li>
+                    <li class="souspartie">4.2. Voyage</li>
                 </ul>
             </div>
+        <div class="commentaire commentaire1">
+            <div class="pseudo">
+                Jean-Noël Bastinguale
+            </div>
+            <div class="text">
+                <p>C’est aux Philippines, en 2002, que naît le projet 81 femmes. Sandra part y étudier un semestre dans le cadre de son école de commerce. Yuki est également du voyage. Sur place, elles donnent des cours à des femmes au passé compliqué (prison, prostitution...). Objectif : les aider à construire des projets professionnels.
+                </p>
+            </div>
+            <div class="commenter">
+                <button>COMMENTER</button>
+            </div>
+        </div>
 	</div>
  
 	<div class="pad_redige unit-70 units-row">
     <div class="prev-next">
-        <!-- <a href="#">← PING PRÉCÉDENT</a> -->
-        <a href="redaction2.html">PING SUIVANT ←</a>
+        <span class="precedent">← PING PRECEDENT</span>
+        <a href="redaction2.html" class="active suivant">PING SUIVANT ←</a>
     </div>
     <div class="up-down">
-    Ping de Jean-Jacques <a href="#">UP VOTE</a> 12 <a href="#">DOWN VOTE</a>
+    <a href="#">UP VOTE 12</a><span class="ume">Ping de Jean-Jacques</span><a href="#">DOWN VOTE -1</a>
     </div>
     	<div class="ping_html unit-60">
-            <h1>TEDx Lille</h1>
             <h2>La Génèse</h2>
             <p>
             J’ai failli les écouter parce qu’en terminal je me demandais comment faire des métiers de fou. 
@@ -73,7 +87,7 @@
             </p>
 
             <h2>Rencontre avec 81 femmes</h2>
-            <p>Projet 81 femmes, 81 femmes nées en 81. 
+            <p><span class="plus plus1">+</span><span class="comment1">Projet 81 femmes, 81 femmes nées en 81.</span>
             Elles doivent rencontrer plein de gens, voir des femmes de partout, des bourgeoises qui ont besoin de ‹ trouver leur raison de vivre ›, des femmes qui osent et qui n’ont pas peur d’oser maintenant.
 
             ‹ Mais écris un livre ! ›
@@ -106,9 +120,9 @@
             <p>On part 24 jours, un cycle de femme.</p>
     	</div>
         <div class="ping_images unit-30">
-            <br><br><br><br><br><br><br><br>
+            <br><br><br><br><br><br>
             <img src="images/01.jpg" height="150" width="150"/>
-            <br><br><br><br><br><br><br><br><br><br>
+            <br><br><br><br><br><br><br><br>
             <img src="images/02.jpg" height="150" width="150"/>
             <img src="images/03.jpg" height="150" width="150"/>
             <br><br><br><br><br><br><br>
@@ -119,4 +133,5 @@
 </div>
 	
 </body>
+
 </html>
