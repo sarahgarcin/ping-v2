@@ -250,7 +250,8 @@ $(document).ready(function(){
             $($('<p>').append($('<b>').text(from), '</br><img src="'+ data +'"><div class="comment'+from+'"></div>')).appendTo('#river');
         }); 
 
-        socket.on('comment image', function (message){ //ajout des commentaires  
+        socket.on('comment imageWeb', function (message){ //ajout des commentaires
+            console.log(message);  
             var str = message;       
             var regexUrl = /^(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/;
             if(regexUrl){
@@ -277,7 +278,6 @@ $(document).ready(function(){
     //         addComment();
     //     });
     // });
-
 });
 
 function placeCaretAtEnd(el) {
@@ -496,36 +496,6 @@ function shareUrl(){
     //     var newUrl = text.replace(regexUrl, "<a href='" + text + "'target='_blank'>" + text + "</a>");
     //     $(".urlHtml").append(newUrl); 
     // }
-
-// var matchesUrl = [];
-
-//     $('#pad_perso').keyup(function(){
-//         var text = $("#pad_perso").val();      
-//         var regexUrl = /^(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/;
-//         var matches = text.match(regexUrl);
-//         matchesUrl.push(matches);
-
-//         for (i=0; i<matches.length; i++){
-//             console.log(matches[i]);
-//             $("#river").append('<div class="urlHtml"></div>');
-//             var newUrl = text.replace(regexUrl, "<a href='" + text + "'target='_blank'>" + text + "</a>");
-//             $(".urlHtml").append(newUrl); 
-//         } 
-
-        // if(oldUrl.match(regexUrl)){
-        //     $("#river").append('<div class="urlHtml"></div>');
-        //     var newUrl = oldUrl.replace(regexUrl, "<a href='" + oldUrl + "'target='_blank'>" + oldUrl + "</a>");
-        //     // var newUrl = oldUrl.replace(regexUrl, "caca");
-        //     $(".urlHtml").append(newUrl); 
-        // }
-        // else {
-
-        // }
-        // $(".urlHtml").addClass("urlHtmlfull");
-        // $(".urlHtml").removeClass("urlHtml"); 
-
-    //});
-
 }
 
 // Regex / abbréviations

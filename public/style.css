@@ -105,7 +105,7 @@ textarea, #padperso {
 #connected{
   top:10px;
   right:150px; 
-  position:absolute;
+  position:fixed;
   font-size: 13px;
   font-family: "ume", serif;
   color:#545454;
@@ -177,7 +177,7 @@ textarea, #padperso {
   color:#1A22FA;
   padding: 7px 20px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: normal;
 }
 
 #content li.active{
@@ -263,16 +263,6 @@ textarea, #padperso {
 
 /* -------------- RIVIERE ----------------- */
 
-.common .filebutton {
-  float:left;
-  position: absolute;
-  margin-top: -30px;
-  color:#1A22FA;
-  font-size: 13px;
-  padding-left: 30px;
-  cursor: pointer;
-}
-
 .common #river {
     overflow: scroll;
     width:20%; 
@@ -309,7 +299,7 @@ background-image: linear-gradient(to right, #FFFFFF 0%, #C6C6C6 100%);
     font-size: 13px;
     letter-spacing: 1px;
   -webkit-margin-before: 0em;
-  -webkit-margin-after: 0em;
+  -webkit-margin-after: 2em;
 }
 
 .common #river b{
@@ -330,23 +320,20 @@ div.filebutton {
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
-  display: inline-block;
   text-decoration: none;
-  color: #000;
   font-family: "ume_balsa", serif;
-  font-size: 2em;
+  font-size: 13px;
   text-align: center;
-  cursor: pointer;
-  line-height: 1;
   letter-spacing: 1px;
-}
-
-div.filebutton {
+  color:#1A22FA;
   line-height: 24px;
-  margin: 5px;
-  overflow: hidden;
+  margin-left: 36%;
+  margin-top: -30px;
   padding: 2px 0;
+  padding-left: 30px;
   width: 200px !important;
+  overflow: hidden;
+  position: relative;
   cursor: pointer;
 }
 
@@ -367,7 +354,7 @@ div.filebutton {
   border: 1px solid #1A22FA;
   background: none;
   margin-top: 10px;
-  margin-left: 15px;
+/*  margin-left: 15px;*/
   cursor: pointer;
 }
 
@@ -381,7 +368,7 @@ div.filebutton {
   border: 1px solid #1A22FA;
   background: none;
   margin-top: 10px;
-  margin-left: 15px;
+/*  margin-left: 15px;*/
 }
 
 #river input.commentSubmit{
@@ -390,7 +377,7 @@ div.filebutton {
   border: 1px solid #1A22FA;
   background: none;
   margin-top: 5px;
-  margin-left: 15px;
+/*  margin-left: 15px;*/
   text-transform: uppercase;
   cursor: pointer;
 }

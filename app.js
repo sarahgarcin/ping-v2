@@ -28,7 +28,6 @@ config(app, express);
 //Handle route "GET /", as in "http://localhost:8080/"
 app.get("/", getIndex);
 
-
 /**
 * routing functions
 */
@@ -115,7 +114,7 @@ io.sockets.on('connection', function (socket) {
         var ts = time.getHours() +"-" + time.getMinutes() + "-" + time.getSeconds();
         var fileName = __dirname + '/public/images/' + ts + "_" + socket.user + ".txt";
         fs.writeFile(fileName, comment);
-        socket.broadcast.emit('comment image', comment);
+        socket.broadcast.emit('comment imageWeb', comment);
     });
 
     socket.on('disconnect', function (user) {
