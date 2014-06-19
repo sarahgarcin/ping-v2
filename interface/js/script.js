@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$( document ).ready(function() {
 
 	$(".plus1").click(function(){
 	 	$('.commentaire1').css("display", "block");

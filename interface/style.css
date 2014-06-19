@@ -641,9 +641,10 @@ div.filebutton {
 
 .prev-next .precedent{
     margin-left: -110px;
+    margin-right: 310px;
 }
 
-.prev-next .suivant{
+.prev-next span.suivant{
     margin-left: 450px;
 }
 
@@ -651,8 +652,12 @@ div.filebutton {
     margin-left: 141px;
 }
 
-.prev-next a{
+.prev-next .precedent a{
     margin-right: 310px;
+}
+
+.prev-next a.suivant{
+    margin-left: 141px;
 }
 
 .ume {
@@ -667,6 +672,10 @@ div.filebutton {
 
 .up-down span{
     padding:10px;
+}
+
+.up-down .fork{
+  margin-left: 60px;
 }
 
 .commentaire {
@@ -691,11 +700,29 @@ div.filebutton {
     margin-bottom: 10px;
 }
 
+.souscommentaire{
+  margin-left: 10px;
+  margin-bottom: 20px;
+  padding-left: 10px;
+  border-left: 1px solid #1A22FA;
+
+}
+
 .commentaire .commenter button{
     font-family: "ume_balsa", sans-serif;
     background: #F4F4F4;
     border: 1px solid #1A22FA;
     color: #1A22FA;
+}
+
+.repondre button {
+ font-size: 10px;
+     font-family: "ume_balsa", sans-serif;
+    background: #F4F4F4;
+    border: none;
+    color: #1A22FA;
+    margin-bottom: 10px;
+}
 }
 
 span.comment1{
