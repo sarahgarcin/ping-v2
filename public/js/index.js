@@ -45,20 +45,6 @@ $(document).ready(function(){
 
     });
 
-    // $("#pad_perso").keyup(function(){
-    //     var string = $("#pad_perso").val();
-    //     var urlRegex = '^(https?:\/\/[^\s]+[^.,:;"\')\]\s])';
-    //     var regextest = "caca"; 
-    //     // var newtxt = string.replace(regextest, 'URL');
-    //     var newtxt = string.replace(urlRegex, 'URL');
-    //     $('#pad_perso').val(newtxt);
-        // var url = string.match(urlRegex);
-        // if(url){
-        //     console.log("une url est là");
-        //     $("#river").append("<div class='url'>" + url + "</div>");
-        // }
-    // })
-
     // Envoie en temps réel au serveur la valeur du textarea
     $("#pad_perso").keyup(function (e) {
         if(e.keyCode == 32 || e.keyCode == 13){
@@ -104,6 +90,24 @@ $(document).ready(function(){
             if(data.user == userList[5]){
                 $('#visu5').html(data.text);
                 var textArea = $('#visu5');
+                textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
+            } 
+
+            if(data.user == userList[6]){
+                $('#visu6').html(data.text);
+                var textArea = $('#visu6');
+                textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
+            }
+
+            if(data.user == userList[7]){
+                $('#visu7').html(data.text);
+                var textArea = $('#visu7');
+                textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
+            }
+
+            if(data.user == userList[8]){
+                $('#visu8').html(data.text);
+                var textArea = $('#visu8');
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
             }       
     });
@@ -170,6 +174,8 @@ $(document).ready(function(){
                     $($('<p>').append($('<b>').text("moi"), '</br><img src="'+ url +'">')).appendTo('#river');
                     addCommentFromWeb();
                     socket.emit('image url', url); 
+                    var scrollImage = $('#river');
+                    scrollImage.scrollTop(scrollImage[0].scrollHeight - scrollImage.height());  
                 });
             }  
         }
@@ -248,6 +254,8 @@ $(document).ready(function(){
     socket.on('image url', function (from, data){
         $('<img src="'+ data +'">').load(function() {
             $($('<p>').append($('<b>').text(from), '</br><img src="'+ data +'"><div class="comment'+from+'"></div>')).appendTo('#river');
+            var scrollImage = $('#river');
+            scrollImage.scrollTop(scrollImage[0].scrollHeight - scrollImage.height());  
         }); 
 
         socket.on('comment imageWeb', function (message){ //ajout des commentaires
@@ -263,10 +271,7 @@ $(document).ready(function(){
             }
             $(".comment"+from).addClass("commentfull");
             $(".comment"+from).removeClass("comment"+from);  
-        });
-
-        var scrollImage = $('#river');
-        scrollImage.scrollTop(scrollImage[0].scrollHeight - scrollImage.height());     
+        });   
 
     });
 
@@ -359,10 +364,12 @@ function markdownToHtml(){
 
     function addComment(){
         var str = $("#fake").val();
-        var regexSlash = /^\/\//gi;
+        var regexSlash = /\/\//gi;
         var regexBreak = /\n/gi;
+        var regexHttp = /http:>/ig;
         str = str.replace(regexSlash, ">");
-        str = str.replace(regexBreak, "  \n"); 
+        str = str.replace(regexBreak, "  \n");
+        str = str.replace(regexHttp, "http://"); 
         $("#fake").val(str);
     }
 

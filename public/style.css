@@ -68,7 +68,7 @@ body {
 
 textarea, #padperso {
     font-family: 'interval', monospace;
-    font-size: 13px;
+    font-size: 12px;
     padding: 10px;
     outline: none;
     border: none;
@@ -87,7 +87,7 @@ textarea, #padperso {
 }
 
 .conf_title{
-    font-size: 15px;
+    font-size: 13px;
     font-family: 'ume', serif;
     color:#545454;
     letter-spacing: 1px;
@@ -104,7 +104,7 @@ textarea, #padperso {
 
 #connected{
   top:10px;
-  right:150px; 
+  right:160px; 
   position:fixed;
   font-size: 13px;
   font-family: "ume", serif;
@@ -132,7 +132,8 @@ textarea, #padperso {
   background: #FFF;
   outline:0;
   overflow: scroll;
-  font-size: 13px;
+/*  font-size: 13px;*/
+line-height: 16px;
   color:#000;
   resize: none;
 }
