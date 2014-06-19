@@ -6,7 +6,7 @@ $(document).ready(function(){
 
     $("#pad_perso").focus();
 
-    timerEvent();
+    // timerEvent();
     rechremp();
     markdownToHtml();
     upAndDown();

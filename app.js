@@ -58,8 +58,8 @@ io.sockets.on('connection', function (socket) {
 
     // Reçoit le contenu "notes"
     socket.on('sendnotes', function (data) {
-        var fileName = __dirname + '/public/sessions/' + socket.user + ".txt"; // créer un fichier texte dans lequel vont s'écrire les données
-        var fileBrut = __dirname + '/public/sessions/' + socket.user + "-" + "brut.txt"; // créer un fichier texte dans lequel vont s'écrire les données
+        var fileName = __dirname + '/public/sessions/diplome/' + socket.user + ".txt"; // créer un fichier texte dans lequel vont s'écrire les données
+        var fileBrut = __dirname + '/public/sessions/diplome/' + socket.user + "-" + "brut.txt"; // créer un fichier texte dans lequel vont s'écrire les données
         fs.writeFileSync(fileBrut, data.text); // Écrire dans les notes dans un fichier texte
         fs.writeFile(fileName, JSON.stringify(data), function (err){ // Écrire dans les notes + timestamp + user dans un fichier json
             console.log(err);
@@ -70,7 +70,7 @@ io.sockets.on('connection', function (socket) {
     socket.on('user image', function (data) {
         var time = new Date();
         var ts = time.getHours() +"-" + time.getMinutes() + "-" + time.getSeconds();
-        var fileName = __dirname + '/public/images/' + ts + "_" + socket.user + ".jpg";
+        var fileName = __dirname + '/public/sessions/diplome/images/' + ts + "_" + socket.user + ".jpg";
 
         var imageBuffer = decodeBase64Image(data);
 
@@ -84,7 +84,7 @@ io.sockets.on('connection', function (socket) {
     socket.on('image url', function (data){
         var time = new Date();
         var ts = time.getHours() +"-" + time.getMinutes() + "-" + time.getSeconds();
-        var fileName = __dirname + '/public/images/' + ts + "_" + socket.user + ".jpg";
+        var fileName = __dirname + '/public/sessions/diplome/images/' + ts + "_" + socket.user + ".jpg";
         var download = function(uri, filename, callback){
             request.head(uri, function(err, res, body){
                 console.log('content-type:', res.headers['content-type']);
@@ -104,7 +104,7 @@ io.sockets.on('connection', function (socket) {
     socket.on('comment image', function (message){
         var time = new Date();
         var ts = time.getHours() +"-" + time.getMinutes() + "-" + time.getSeconds();
-        var fileName = __dirname + '/public/images/' + ts + "_" + socket.user + ".txt";
+        var fileName = __dirname + '/public/sessions/diplome/images/' + ts + "_" + socket.user + ".txt";
         fs.writeFile(fileName, message);
         socket.broadcast.emit('comment image', message);
     });
@@ -112,7 +112,7 @@ io.sockets.on('connection', function (socket) {
     socket.on('comment imageWeb', function (comment){
         var time = new Date();
         var ts = time.getHours() +"-" + time.getMinutes() + "-" + time.getSeconds();
-        var fileName = __dirname + '/public/images/' + ts + "_" + socket.user + ".txt";
+        var fileName = __dirname + '/public/sessions/diplome/images/' + ts + "_" + socket.user + ".txt";
         fs.writeFile(fileName, comment);
         socket.broadcast.emit('comment imageWeb', comment);
     });

@@ -12,22 +12,6 @@
 <body>
     <script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
     <script src="js/script.js" type="text/javascript"></script>
-<script>
-
-$(document).ready(function(){
-    var $divs = $('#pad_perso, #visu');
-    var sync = function(e){
-        var $other = $divs.not(this).off('scroll'), other = $other.get(0);
-        var percentage = this.scrollTop / (this.scrollHeight - this.offsetHeight);
-        other.scrollTop = percentage * (other.scrollHeight - other.offsetHeight);
-        setTimeout( function(){ $other.on('scroll', sync ); },10);
-    }
-    $divs.on( 'scroll', sync);
-
-});
-
-
-</script>
  
 <div class="header">
     <div class="accueil">
@@ -69,49 +53,18 @@ CNAM
 Ateliers des possibles
 15 mai 2014
 
-|
-|
 Orienté sur le faire
 Organisation des journées. 
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
 9h54
 PENSER DES FORMES D'ORGANISATIONS ALTERNATIVES
 énigme d'un point de vue de l'organisation de la coopération.
 Coupure générationelle / coupure cognitive. 
-|
-|
 Incompréhension de ce qui se passe dans le numérique.
 4 tensions / 4 questions
 
-|
-|
 Fermeture / Contrôle des entrées et des sorties
 Mais aujourd'hui les communautés sont ouvertes.
 Ce qui faisait l'efficience de ces organisations c'était la fermeture.
-|
 Coordination efficiente = Coordination hierarchique.
 Or les lieux comme hackerspace / fab lab n'ont pas de hiéarchie. 
 Tension entre DIY / bénévolat... / modèle économique
@@ -129,7 +82,6 @@ Rituels d'intégration ?
 - Comment partage-t-on le bien commun ?? 
 Comment se font les résolutions de conflit ? 
 Y a t-il des formes de régulation ? 
-|
 10h05
 Culture Collaborative du libre 
 Sebastien BROCA (LabEx SITES/ CEPN)
@@ -143,11 +95,7 @@ Modèle cathédrale -> Verticalité / Contrôle / Direction centralisée / Mises
 Bazar -> Horizontalité / Ouverture / Divertsité des approches / Mises à jour fréquentes. 
 “With enough eyeball, all bugs are shallow“
 
-|
-|
-|
 Parallèle entre Debian description // Dev noyau Linux
-|
 Pekka Himanen “L'éthique hacker“
 L'ethique hacker rond avec l'éthique protestante (devoir moral / intéret financier)
 Ethique hacker -> Motivation intrinsèque / Passion.
@@ -158,19 +106,12 @@ Projet GNU/linux 1993
 dépent d'une association 
 1 millier de développeurs -> libristes engagés. 
 
-|
-|
-|
 Documents fondateurs et régulateurs.
 procédure -> Le new member Process
 Pour déposer sa candidature:
 - identification création d'un réseau de confiance -> le postulant doit rencontrer au moins 1 membre de la communauté -> sécurité / créer du lien.
 - Philosophy and Procedure: intégration dans la communauté -> Verifier que le postulant maitrise les règles de la communauté. On pose des question sur les documents fondateurs...
-|
-- Tasks and Skills -> évaluation des compétences techniques. |
-|
-|
-L'organisation du travail chez Debian
+- Tasks and Skills -> évaluation des compétences techniques. L'organisation du travail chez Debian
 - Le travail est organisé de manière très horizontale. 
 - Travail évalué a posteriori par les pairs 
 - Comité technique peut intervenir pour résoudre un conflit qui n'est pas résolu par consensus. 
@@ -179,16 +120,7 @@ Conclusion;
 - organisation du projet est élaborée et formalisée
 - Il existe des barrière à l'entrée -> Processus particulier pour être intégré à la communauté.
 - Debian est une communauté unie par le partage de certaines valeurs
-- Des hiérarchies informelles peuvent se recréer sur une base méritocratique. |
-|
-|
-|
-|
-|
-|
-|
-|
-Le noyau Linux: 
+- Des hiérarchies informelles peuvent se recréer sur une base méritocratique. Le noyau Linux: 
 - Coeur des principaux OS libres (GPS, supercalculateur, Android)
 - Le premier projet a avoir une grosse communauté de developpeurs grace à internet. 
 - Chaque nouvelle version est developpé par environ 1500 contributeurs -> 85% des gens sont salariés pour travailler sur Linux. (Red Hat...)
@@ -196,15 +128,7 @@ Ces entreprises emploient des salariés pour contribuer à Linux -> développeme
 
 L'organisation du travail:
 - archi modulaire : module et sous module indépendants. 
-- Organisation pyramidale bottom-up -> en bas de la pyramide -> patch|
-|
-|
-|
-|
-|
-|
-|
-Chaque patch est controlé et traçable.
+- Organisation pyramidale bottom-up -> en bas de la pyramide -> patchChaque patch est controlé et traçable.
 Linus Torvalds au sommet de la pyramide qui fusionne toutes ces contributions en code -> dictateur bienveillant.
 
 Conclusions sur Linux
@@ -212,299 +136,35 @@ Conclusions sur Linux
 - Cette hiérarchie est différente d'une hiérarchie managériale classique 
 - Déconnexion entre le paiement d'un salaire et la capacité à exercer un contrôle managériale. 
 - Dimension communautaire très faible (très différente de Debian)
-|
 5 thèse sur la collaboration dans les projets libres
 1) la collaboration n'est jamais spontanée
 2) la collaboration n'est jms pleinement horizontales (méritocratie)
 3)La collaboration n'est jms totalement ouverte
 4) pas de modèle de collaboration unique. 
 5) Travail bénévole / travail salarié. 
-|
-|
 Les barrières à l'entrée -> compétences techniques fortes (Linux)
-|
 Démocratie technique et volonté de démocratisation du savoir technique -> revendication / promouvoir l'enseignement informatique à l'école. 
 + Install Party + GUL (guide utilisation de linux)
-Mais élément de fermeture -> barrière à l'entrée + RTFM (Read the Fucking Manual)|
-|
-|
-|
-Tradition du hacking abivalente. 
+Mais élément de fermeture -> barrière à l'entrée + RTFM (Read the Fucking Manual)Tradition du hacking abivalente. 
 Dans les hackerspace -> même problème ? 
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-Dilemme du hacker -> fidèle à un idéal travail passioné et autonome / bénévolat ou entreprise salarié qui est loin de l'éthique des hackers. |
-// Fin de la parole de Sébastien Broca
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
+Dilemme du hacker -> fidèle à un idéal travail passioné et autonome / bénévolat ou entreprise salarié qui est loin de l'éthique des hackers. // Fin de la parole de Sébastien Broca
 10h50
-|
-|
 Andreea Gorbatai
 Doctorat sur la collaboration dans Wikipédia. 
-|
-|
-|
-|
-|
 Enchanted Exchanges: Evidences from Media Coverage of the Maker Movement.
 What's the Maker Movement ? 
-|
-|
 // Image définition du mouvement maker aux USA
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
 Le profit n'est pas au centre des mouvements makers -> se retrouvent autour de valeurs. Sélection naturelle.
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
 // Routeur alimenter en Clé USB - mini NAS
 Routeur Treck
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
 Chartres et Manifestes dans les hackerspaces et les fablabs. 
 Daniel Hotar / JB Labrune / Martin de Bie / Camille Bosqué et Thomas Landrain
 
 Camille Bosqué
 
-|
 La fablabs existe depuis les années 2000
 Espace Atelier partagé / machines mises à disposition d'un public. Début au MIT
 Neil Gershenfeld -> How to make almost anything ? Les étudiants pouvaient fabriquer ce qu'ils voulaient à partir des machines. Plus de sens que ce qu'il pensait. Objets perso -> pour usage précis. 
-|
-|
-|
-|
 MIT implante les fablabs dans le monde -> Inde, Costa Rica etc..
 Puis les lieux deviennent autonomes et se développent tout seul. 
 Donc besoin de fixer des règles / chartre 
@@ -513,39 +173,18 @@ En Norvège -> système de GPS pour traquer les troupeaux de rennes.
 Répondre à des besoins précis // Contextualiser
 Chartre:// image de la chartre
 Machines proches pour pouvoir répliquer les projets -> même marques au départ. 
-|
-|
 Comment on intégre le réseau des fab labs ?? 
 Un wiki sur lequel les fablabs peuvent s'enregristrer. Puis on s'évalue selon 4 critères (A, B, C) // image
-|
-|
-|
-|
-|
-|
-|
 FabLab de Barcelone. 
 Open does not mean free
 Fab Academy cours en ligne depuis le MIT
 //image fablab Barcelone
-|
-|
-|
 MIT Fablab Norvège
 GPS pour traquer les troupeaux de Rennes
 “fablabs are global network of people who want to cooperate and share knowledge'
-|
 // images fablab norvège
-|
-|
 Fablab = community center
 Au centre zone de convivialité et sur les côté technologie. 
-|
-|
-|
-|
-|
-|
 Le FacLab université de Cergy-Pontoise à Gennevilliers / Laurent Ricard et Emmanuel Roux
 Financé par l'université mais fréquenté par des personnes extérieures.
 Devise: 'Participer / Partager / Documenter'
@@ -557,28 +196,10 @@ P-e le premier Fablab
 Histoire très lié à Mel King -> Militant cause des noirs. Ancien prof du MIT.
 Partage son bureau dans son quartier à Boston. 
 Fablab correspond au bureau loué par le MIT pour la retraite de ce monsieur. Au début sorte de cyber café. Puis réfléchir à comment on utilise ces machines.
-|
-|
 Programme tourné vers les jeune de son quartier 
 Learn to teach, teach to learn
 Chartre des droits de l'homme. 
 // image affichette fablab
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
 Thomas Landrain
 Président et Co-fondateur
 La Paillasse / Bio Hacking
@@ -586,28 +207,14 @@ La Paillasse / Bio Hacking
 Réapropriation de la biologie. 
 Biologie moderne -> Découverte de la structure chimique de l'ADN.
 Langage du vivant.
-|
-|
-|
-|
-|
-|
 Baisse du coup du génome humain. 
 N'est plus réservé à une certaine élite. 
-|
-|
-|
-|
 Plateforme ou on peut mettre son génome -> OpenSNP
-|
 Mettre son génome en open-source. 
 Créer une librairie de génomes pour les analyser. 
 Oportunité d'effectuer des analyses. 
 Compétition IGEM -> COmpétition internationale sur la biologie synthétique.
 Possibilité de prototyper des machines biologiques par la biologie synthétique.
-|
-|
-|
 Projets Variés:
 - Fabriqué un détecteur d'arsenic (à 1 euro)
 Approche Low Cost et Low Tech. 
@@ -615,39 +222,19 @@ Approche Low Cost et Low Tech.
 - changé la structure de la bière pour donner de la vitamine C-> cafeinne pour être concentré le lendemain.
 - Design prospectif -> Mise en pratique de la techno.
 // image (hello world)
-|
-|
-|
-|
 Tous les projets réalisé sont libérés en open source + documenté. Obligation de documenter entièrement leur processus de travail
-|
-|
-|
-|
-|
 Hacker les biologies
 ce mouvement s'étend un peu partout.
-|
 Mouvement décentralisé. 
 Autour d'une philosophie -> une biologie hors des murs institutionels. 
 Peu de rencontres physiques entre les différents acteurs. 
 -> Réalisation d'un code éthique
 DIYBio
-|
-|
-|
-|
-|
-|
 Mais 2011 rassemblement à Londres de toute la communauté. 
-|
-|
 DIYbio Code Ethics
 Premier code éthique pour le biohacking.
 //image code ethics
 
-|
-|
         </textarea>
     </div>
 
@@ -677,92 +264,17 @@ Premier code éthique pour le biohacking.
 CNAM 
 Ateliers des possibles
 15 mai 2014
-|
-Accueil Labo LISS/ LISE ?|
-09h44
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
+Accueil Labo LISS/ LISE ?09h44
 CNAM né utopie revo. innov + partage savoirs. volonté pas sepraré objt tech et obj art. 
 rassemble chercheurs et acteur soc civil -> Y connaissance. + école art et design. 
 surprise reflexion echo reflexion avec socio.
 Effervessance de lieux (hacker space) -> enjeux sociétaux. Org collective, forme de L, rpprt conso et Y, format°. 
 Decal entre enjeux et faible presnence espaces publiques et arenes politique. -> création espace publique. ≠ lieux de promotion de models MAIS élaboration collective.
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
 09h54
 Penser des org alternatives et des formes alternatives de l'action collective.
 
-|
-|
-|
 ? pk enigmes de l'organisation de la coopération.
 Presse. Sentiment d'une coupure. les élites débordés par le numérique (Le monde). // coupure générationnel et technique. Coupure entre stuctures verticlaes et nvx culture horyzontal -> 0 comprehension. 
-|
-|
-|
-|
-|
-|
 4 tension et 4 quezstions.
 Penser models organisationel en SHS. En G des model. par ex la commmunauté = communauté fermé. Lien fort mais aussi fermeture. exclusion et intégration. 
 Ajourd'hui les comm sont ouverte. On sais pas def l'efficience d'une comm. pk efficience comm = communauté.
@@ -787,14 +299,6 @@ Rituel ?
 ??Partage-ton le bien commun construit. Valeurs/normes/collectif/ ts ca. Quel reco. Bénévole non bénévole. forme de régu m si contraire à certaines formes. 
 
 /// les question sur super interessante. L'idée de la tension montre 
-|
-|
-|
-|
-|
-|
-|
-|
 les diff entre acteurs)
 
 
@@ -805,9 +309,6 @@ logiciel libre ancetre des makers. open hardware traduction de la fab mat des 4 
 Signification et valeurs proche du log libre.
 ID depassé forme consulérisme techno passif/a liénant -> appropriation des obj tech = hack.
 Source d'inspi makers sur ?? modes d'org. Sujet seduisant, intenret, pleinement hozyzontal sans hierarchie avec autonomie très forte. ?? cette ide la. 
-|
-|
-|
 cathédrale (peu souvent distribué) et bazar (nvx model( linux) model du bazar + hozyzontal ++++ contributeurs avec apporche propre. force du nombre. with enougheyeball, all buggs are shadows. Utilisateurs -> debuggeurs. mise a jour fréquente. 
 
 -> topos de collab en ligne. horyzontal et spontané. Ex avec deux comm. debian et noyau linux.
@@ -820,24 +321,11 @@ distrib organsation stable autour de linux qui forme un OS stable.
 Debian amblématique depant assoc. réunis comme 1000 contrib. Libriste hardcore. Pas directemetn payé. 2 status. Debian dev et debian maintainer.
 
 90's 10aine de dev -> procédure doc fondateurs. contrat sociale. principe de log libre celond ebian. constitution. Autre process New member process. 
-|
-|
 Pas necessaire pour dev mais titre forme d'adoubement. + droit d'élir le porject leader. 
 Candiature. Impliqué dans Debian par gage compétence et motiv. 
 3 etape : rencontre en personne 1 membre offciel pour verif ID. web of trust. 1 memebre a rencontré un autre membre. fction de controle + sentiment d'appartenance à la communauté. 
 Phylosophy and procedure. Verif il maitrise les regles en viguer ? adhère aux valeurs qui def cette commuanauté. regles log libre celon debian.
-|
-Task and skills. verif compétences technique du candidat. domaine tech ou il souhaite. -> lettre reco. postulant accepté ou pas. |
-|
-|
-debian process passé contrib sur grd egalité de status. Assure maintenance paquet logicel. L org horyzontal. ou rejet contirb pas pertiante tech ou redondante. technical commity. 8 membres en cas de controverse technique si pas reussi pas conssensus.|
-|
-|
-≠ L spontané et règles. Barrières à l'entrée. Log libre modif et acces code -> barrière technique et new member process. Nuance principe d'ouverture. Mais contre balancé principe méritocratique rejet des contrib pas au niveau. |
-|
-|
-|
-Principe de préservation des valeurs de debian. Pour rentrer il faut adherer aux valeurs de debian. 
+Task and skills. verif compétences technique du candidat. domaine tech ou il souhaite. -> lettre reco. postulant accepté ou pas. debian process passé contrib sur grd egalité de status. Assure maintenance paquet logicel. L org horyzontal. ou rejet contirb pas pertiante tech ou redondante. technical commity. 8 membres en cas de controverse technique si pas reussi pas conssensus.≠ L spontané et règles. Barrières à l'entrée. Log libre modif et acces code -> barrière technique et new member process. Nuance principe d'ouverture. Mais contre balancé principe méritocratique rejet des contrib pas au niveau. Principe de préservation des valeurs de debian. Pour rentrer il faut adherer aux valeurs de debian. 
 Parler de communauté pas si lointain ancienne. adhésion valeurs commune et forme de fermeture et hiérarchie informel sur une base méritocratique. 
 
 
@@ -849,28 +337,10 @@ Linux joint venture entre entreprise.
 Comment s'organise le L.
 Architecture modulaire. module et sous module -> L indépendant. Organisation indépendant entre module. 
 Org ressemble à un pyramide bottom up. 
-Base dev qui propose patch. liste de discutions. |
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-10h29
+Base dev qui propose patch. liste de discutions. 10h29
 Au sommet Linus Torval dictateur bienveillant. 
 
-org hiérarchique formalisé. ≠ managerial classique. Contrôle a postériori. Ne peut obliger à L sur tel morceau. |
-Intègre a cette hiérarchie particulière et aussi soumis management de leur entreprise. Les salariés employé pour L à Linux. Ds salariat autonomie dans le L. employeur renonce un peu de leur pouvoir. Un peu "''magique''.
+org hiérarchique formalisé. ≠ managerial classique. Contrôle a postériori. Ne peut obliger à L sur tel morceau. Intègre a cette hiérarchie particulière et aussi soumis management de leur entreprise. Les salariés employé pour L à Linux. Ds salariat autonomie dans le L. employeur renonce un peu de leur pouvoir. Un peu "''magique''.
 dimension communautaire très faible. Indiv qui collabore. intérêt tech. les gens sont des fonctions.
 1) Collab jamas spontané
 2) collab jamais spontané , formel ou informel (méritocratie…)
@@ -880,518 +350,28 @@ dimension communautaire très faible. Indiv qui collabore. intérêt tech. les g
 
 
 Partie II Les équivoques de l'éthique Hackers. 
-|
-|
-|
-|
-|
 Contraste entre aristocratie technique et volonté d'ouverture. 
-Discourt de démocratisation du savoir technique (Install party GUL) et en même temps élément de fermeture comme des barrières à l'entrée. RTFM read the fucking manual|
-|
-|
-Tradition du hacking depuis le debut cette tensions existe. 50's au MIT. Hacker = certaine virtuosité = tallent excellence. 
+Discourt de démocratisation du savoir technique (Install party GUL) et en même temps élément de fermeture comme des barrières à l'entrée. RTFM read the fucking manualTradition du hacking depuis le debut cette tensions existe. 50's au MIT. Hacker = certaine virtuosité = tallent excellence. 
 
 ?? meme tension démocratisation savoir et aristo tech dans les nvx lieux de fabrication. Lieu réservé à des connaisseur -> intimident pour des non connaisseurs du sérail. 
 
 Tension entre travail passionné et autonome au risque d'être bénévole ou travail dans une fie intern de a techno.
 
 recapture des contributions ex des makers boot 
-10h42|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-Introduction du marchand dans le bénévole et pro. |
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-10h48
+10h42Introduction du marchand dans le bénévole et pro. 10h48
 André Gorbatai
 Penser des formes altenratives d'organisations et d'actions collectives. 
 Ecole management US. Interet eco collaborative. étudie collaboration dans wikipedia. 
-Interet dans mkers , recherches et investigations|
-|
-|
-|
-|
-|
-|
-Progess maker mouvement in the us reflected in ht media, events…
-|
-|
-|
-|
-|
+Interet dans mkers , recherches et investigationsProgess maker mouvement in the us reflected in ht media, events…
 What is new with the makers. Alternative forms of collaboration.
-Smilarities whith habkers/libriste.  |
-|
-|
-|
-|
-|
-|
-
+Smilarities whith habkers/libriste.  
 User innovation.
 Sport fantatic. modify their own tools sport equipment. -> entreprenership. selling particualr tech equipment.
 
-Revatilisated indrustry and community the DIY. |
-|
-|
-|
-|
-Computer with art and creation gives users the ability to modify and reppear their tools modify their own product.
+Revatilisated indrustry and community the DIY. Computer with art and creation gives users the ability to modify and reppear their tools modify their own product.
 
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-New maret rise. the org try to legitimate. |
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-11h21 Discution.|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-// Routeur alimenter en Clé USB - mini NAS 
+New maret rise. the org try to legitimate. 11h21 Discution.// Routeur alimenter en Clé USB - mini NAS 
 Son petit nom : TRECK
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
 11h50
 Daniel Hotar / JB Labrune / Martin de Bie / Camille Bosqué et Thomas Landrain
 
@@ -1399,7 +379,6 @@ Chartre manifeste des hackerspaces et fablabs.
 Instrument normatif d'ou viennet-ils ? 
 Utilité ? ?2 controverse -> par codes. 
 Rp à la créativité -> limites ? 
-|
 ≠ entre les ≠ personnes ? mérites. 
 ? ces instrument -> sociabilité ?
 -> Y de reconnaissance. 
@@ -1427,7 +406,6 @@ Id charte. machines proches pour -> replicabilité des projets.
 // protocole scientifique.
 M set de machines (m marques) -> / des transfers.
 
-|
 ? du label ou pas label. comment on integre le reseau. es-ce que le Mit juge et valide l'inclusion de lieux. Wiki sur lequel les fablabs s'enregistrent. Pas de postul. Liste et -> auto évaluation de A à C. 
 accès gratuit ? ouvert ? exclusif ?
 Charte revandiqué et l'affiché. 
@@ -1440,16 +418,14 @@ Participation au réseau
 Es ce que le smebres sont actif au niveau mondial ou seulement au niveau |ocal
 
 Open does not mean free. 
-Fablab ferme ext Mais quelques workshop. se rattrape dans le reseau mondial. Fab academy cours en ligne. |
-
+Fablab ferme ext Mais quelques workshop. se rattrape dans le reseau mondial. Fab academy cours en ligne. 
 
 Quelque lieux. MIT fablab norway un de spremier ua monde -> renes
 ' global network of people who want to cooperate and share knoledge'
 Perdu proche du cercle polaire artique. 
 Org du fabLAb grand chalet. enorme cuisine. désacord avec MIT sur cuisine. pas possible. ALors que élément impt celon directeur c'est un community center plus qu'un lieux de prototypage.
 
-M fablab histo conception perso du projet. Technique anexe. Lieux de vilégiature pour le MIT (cé"lébration d'un fablab)|
-
+M fablab histo conception perso du projet. Technique anexe. Lieux de vilégiature pour le MIT (cé"lébration d'un fablab)
 Faclab Cergy. 
 Gennevilliers / Laurent Ricard et Emmanuel Roux
 fi par université accès gratuit. mais gens pas étudiants.
@@ -1465,9 +441,6 @@ Rencontre Mel King and Neil Gershenfeld. Découvre la proximité de leurs projet
 Techno of the art. 
 Programme tourné vers son quartier. Learn to tech teach to learn.
 Dans la charte droits de l'H.
-|
-|
-|
 ?? des affichettes et panneaux qui organisent les espaces mis en commun et les valeurs de 
 l'organisation en groupe.
 

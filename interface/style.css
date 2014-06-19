@@ -507,6 +507,16 @@ div.filebutton {
  padding-bottom: 5px;
 }
 
+.gifs li:first-child{
+  border-top: 2px dotted #1A22FA;
+  padding-top: 20px;
+}
+
+.gifs li:nth-child(2){
+  border-top: 2px dotted #1A22FA;
+  padding-top: 20px;
+}
+
 .gifs li{
   margin-top: 50px;
   margin-bottom: 30px;
@@ -723,7 +733,7 @@ div.filebutton {
     color: #1A22FA;
     margin-bottom: 10px;
 }
-}
+
 
 span.comment1{
     background-image: -webkit-gradient(
