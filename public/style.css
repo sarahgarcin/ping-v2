@@ -193,14 +193,14 @@ line-height: 16px;
 #content #previewer {
   position:absolute; 
   background:#FFF; 
-  width:32%;
-  height:558px;
+  width:32.7%;
+  height:568px;
   float:left; 
   margin-left:0px; 
   margin-top:0px;
   border-top: 1px solid #1A22FA;
   border-left: 1px solid #1A22FA;
-  border-bottom: 1px solid #1A22FA;
+/*  border-bottom: 1px solid #1A22FA;*/
   display:none;
   padding: 20px;
   font-size: 13px;
@@ -266,8 +266,9 @@ line-height: 16px;
 
 .common #river {
     overflow: scroll;
-    width:20%; 
-    height:598px; 
+    width:20%;
+    max-width: 260px;
+    height:599px; 
     background:#fff; 
     float:left; 
     border-top: 1px dotted #1A22FA;
@@ -411,8 +412,12 @@ div.filebutton {
   display: inline-block;
   margin-right: 30px;
   margin-left:30px;
-  padding: 5px 10px;
+  padding: 1px 30px;
   font-size: 17px;
+}
+
+.arrow li:hover{
+  border: 1px dotted #1A22FA;
 }
 
 #visualisateur {
@@ -424,7 +429,7 @@ div.filebutton {
   float: left;
 }
 
-#visualisateur #visu0, #visu1, #visu2, #visu3, #visu4, #visu5 {
+#visualisateur #visu0, #visu1, #visu2, #visu3, #visu4, #visu5, #visu6, #visu7, #visu8 {
   font-size: 11px;
   line-height: 17px;
   letter-spacing: 0.05em;

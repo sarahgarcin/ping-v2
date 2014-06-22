@@ -508,21 +508,21 @@ div.filebutton {
 }
 
 .gifs li:first-child{
-  border-top: 2px dotted #1A22FA;
-  padding-top: 20px;
+  margin-top: 200px;
 }
 
 .gifs li:nth-child(2){
-  border-top: 2px dotted #1A22FA;
-  padding-top: 20px;
+  margin-top: 200px;
 }
 
 .gifs li{
-  margin-top: 50px;
+  margin-top: 100px;
   margin-bottom: 30px;
   list-style:none;
   position: relative;
   height: 600px;
+  border-top: 2px dotted #1A22FA;
+  padding-top: 20px;
 }
 
 .gifs li.texte{
@@ -577,6 +577,7 @@ div.filebutton {
 .units-row .ping_html{
     margin-left: 0px;
     padding-right: 80px;
+    width:510px;
 }
 
 .ping_html {
