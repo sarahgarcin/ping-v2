@@ -55,13 +55,13 @@
 }
 
 body {
-    width: 97%;
-    height: 98%;
+    width: 100%;
+    height: 100%;
     color:#000;
     background: #C6C6C6;
     font-size: 13px;
     font-family: 'interval', monospace;
-    margin: 0 40px;
+    margin: 0px;
     font-weight: normal;
 
 }
@@ -75,8 +75,19 @@ textarea, #padperso {
     font-weight: normal;
 }
 
+a{
+  text-decoration: none;
+}
+
+a:visited{
+  color: inherit;
+}
+
 .header{
-  margin-top: 10px;
+  background-color: #E2E1E1;
+  width: 100%;
+  padding: 10px 0px 0px 0px;
+  border-bottom: 1px dashed #1A22FA; 
 }
 
 .accueil {
@@ -95,11 +106,19 @@ textarea, #padperso {
 }
 
 .title {
-    float: right;
     font-family:monospace;
-    font-size:0.3em;
+    font-size:0.3rem;
     color: #1A22FA;
-    margin-top: -20px;
+    text-align: right;
+    padding-right: 30px;
+}
+
+.session-name{
+  font-size: 1.5rem;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  color: #1A22FA;
 }
 
 #connected{
@@ -132,8 +151,7 @@ textarea, #padperso {
   background: #FFF;
   outline:0;
   overflow: scroll;
-/*  font-size: 13px;*/
-line-height: 16px;
+  line-height: 16px;
   color:#000;
   resize: none;
 }
@@ -457,3 +475,131 @@ div.filebutton {
  padding-top: 5px;
  padding-bottom: 5px;
 }
+
+/*INDEX PAGE*/
+.session{
+  width: 60%;
+  margin: 30px auto 30px 10%; 
+}
+
+#add-session{
+  background-color: #1A22FA;
+  color: #FFF;
+  padding: 10px;
+  font-size: 1.4rem;
+  font-family: "interval", monospace;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+#add-session:hover {
+  background-color: #FFF;
+  color: #1A22FA;
+}
+.list-session ul {
+  padding: 0;
+}
+
+.list-session .session-project{
+  list-style: none;
+  background-color: #1A22FA;
+  color: #FFF;
+  padding: 10px 15px;
+  font-size: 1.4rem;
+  display: inline-block;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.list-session .session-project:hover{
+  background-color: #FFF;
+  color: #1A22FA;
+}
+
+.list-session .session-project a{
+  color: #FFF;
+  text-decoration: none;
+}
+.list-session .session-project:hover a{
+   color: #1A22FA;
+}
+.form-create{
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 20px;  
+}
+
+.form-create input.new-session{
+    height: 5vh;
+    width: 15vw;
+    border: 1px solid #1A22FA;
+    color: #1A22FA;
+   font-size: 1rem;
+   padding-left: 20px;
+}
+
+.form-create input.submit-session{
+    height: 5vh;
+    padding: 0px 20px;
+    margin-left: 10px; 
+    background-color: #1A22FA;
+    border:none;
+    color: #FFF;
+    cursor: pointer;
+}
+/*ADMIN PAGE*/
+  .content-admin{
+    width: 95%;
+    margin: 30px auto;
+  }
+
+  .content-admin h2{
+    text-transform: uppercase;
+    text-decoration: underline;
+  }
+
+  .content-admin input{
+    display: block;
+    height: 4vh;
+    width: 18vw;
+    border: 1px solid #1A22FA;
+    margin-bottom: 8px;
+    padding-left: 10px;
+  }
+
+  .content-admin button{
+    font-family: "interval", monospace;
+    background-color: #1A22FA;
+    color: #FFF;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  .content-admin button:hover{
+    background-color: #FFF;
+    color: #1A22FA;
+  }
+
+  .left-admin{
+    width: 33.3%;
+    display: inline-block;
+    vertical-align: top;
+  }
+  .center-admin{
+    width: 33.3%;
+    display: inline-block;
+    vertical-align: top;
+  }
+  .right-admin{
+    width: 33.3%;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .left-myping{
+    margin-top: 100px;
+  }
+
+/*END ADMIN PAGE*/

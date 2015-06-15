@@ -1,67 +1,18 @@
 html
   head
-    meta(charset="utf-8")
-    meta(http-equiv="X-UA-Compatible", content="IE=edge")
-    title #{title}
-    link(rel="stylesheet", href="style.css")
-    link(rel="icon" href="favicon.ico")
+    include templates/head.jade 
 
-  body
+  body.index
+    include templates/header.jade 
+  
+    div.session
+      div.list-session
+        button#add-session Ajouter un compte
+        div.form-create
+        ul
 
-  div.header
-    div.accueil ←
-    div.conf_title Diplôme Sarah Garcin & Victor Lebeau, 23 juin 2014, ENSAD, salle 311
-    div#connected
+    include templates/footer.jade
 
-  div.title(style='white-space:pre;') 
-      |         ___                     ___           ___     
-      |        /\  \                   /\  \         /\__\    
-      |       /::\  \     ___          \:\  \       /:/ _/_   
-      |      /:/\:\__\   /\__\          \:\  \     /:/ /\  \  
-      |     /:/ /:/  /  /:/__/      _____\:\  \   /:/ /::\  \ 
-      |    /:/_/:/  /  /::\  \     /::::::::\__\ /:/__\/\:\__\
-      |    \:\/:/  /   \/\:\  \__  \:\~~\~~\/__/ \:\  \ /:/  /
-      |     \::/__/       \:\/\__\  \:\  \        \:\  /:/  / 
-      |      \:\  \        \::/  /   \:\  \        \:\/:/  /  
-      |       \:\__\       /:/  /     \:\__\        \::/  /   
-      |        \/__/       \/__/       \/__/         \/__/    
-      p(style= "color:#C6C6C6; font-size:12px;") Ping Is Not Googledocs
-
-  div#content
-    div.pad
-      ul
-        li.markdown.active(href="#") MARKDOW
-        li.html(href="#") HTML
-
-      textarea#pad_perso
-      textarea#fake
-
-    div#previewer
-
-    div.common
-      div.filebutton PARTAGER DES IMAGES
-        input(type="file", id="imagefile", accept="image/*")
-      //-form.imagefromweb
-        input(type="text", id="imageurl")
-        button(type="button", id='submiturl') SUBMIT
-
-      div#river
-
-    div#visualisateur
-
-    div.arrow
-      li#upClick ↑
-      li#downClick ↓
+    script(src='/js/index.js')
 
 
-
-  script(type="text/javascript", src="/socket.io/socket.io.js")
-  script(type="text/javascript", src="/js/jquery-1.11.0.min.js")
-  script(type="text/javascript", src="/js/jquery.caret.js")
-  script(type="text/javascript", src="/js/jquery.scrollTo.min.js")
-  script(type="text/javascript", src="/js/markdown.js")
-  script(type="text/javascript", src="/js/marked.js")
-  script(type="text/javascript", src="/js/rainbow-custom.min.js")
-  script(type="text/javascript", src="/js/crevasse.js")
-  script(type="text/javascript", src="/js/client.js")
-  script(type="text/javascript", src="/js/index.js")

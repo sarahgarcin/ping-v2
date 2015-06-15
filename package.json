@@ -1,7 +1,7 @@
 {
   "name": "Ping",
   "version": "0.1.0",
-  "description": "projet de diplomle sarah",
+  "description": "projet de diplome Victo et Sarah",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,10 +9,14 @@
   "author": "sarah garcin",
   "license": "ISC",
   "dependencies": {
-    "socket.io": "~0.9.16",
-    "express": "~4.4.1",
-    "jade": "~1.3.1",
-    "body-parser": "~1.3.0",
-    "request": "~2.36.0"
+    "body-parser": "^1.12.4",
+    "express": "^4.12.4",
+    "fs-extra": "^0.19.0",
+    "jade": "^1.3.1",
+    "recursive-readdir": "^1.2.1",
+    "request": "^2.36.0",
+    "socket.io": "^0.9.17",
+    "underscore": "^1.8.3",
+    "url": "^0.10.3"
   }
 }

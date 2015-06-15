@@ -1,0 +1,37 @@
+html
+  head
+    include templates/head.jade
+
+  body
+
+    include templates/header.jade 
+
+    div#content
+      div.pad
+        ul
+          li.markdown.active(href="#") MARKDOW
+          li.html(href="#") HTML
+
+        textarea#pad_perso
+        textarea#fake
+
+      div#previewer
+
+      div.common
+        div.filebutton PARTAGER DES IMAGES
+          input(type="file", id="imagefile", accept="image/*")
+        //-form.imagefromweb
+          input(type="text", id="imageurl")
+          button(type="button", id='submiturl') SUBMIT
+
+        div#river
+
+      div#visualisateur
+
+      div.arrow
+        li#upClick ↑
+        li#downClick ↓
+
+    include templates/footer.jade
+
+    script(src='/js/notes.js')
