@@ -1,0 +1,18 @@
+html
+  head
+    include templates/head.jade 
+
+  body.index
+    include templates/header.jade 
+  
+    div.session
+      div.list-session
+        button#add-session Ajouter un compte
+        div.form-create
+        ul
+
+    include templates/footer.jade
+
+    script(src='/js/index.js')
+
+

@@ -2,20 +2,43 @@ $(document).ready(function(){
 
     var serverBaseUrl = document.domain;
     var socket = io.connect(serverBaseUrl);
+    var host = window.location.host;
     var userList = [];
     var userCount = [];
     var id = [];
-    var connectCount = 0;
+    var userName = prompt("Quel est votre prénom ? ");
+    id.push(userName);
+
 
     /* sockets */
     socket.on('connect', onSocketConnect);
     socket.on('error', onSocketError);
-
+    socket.on('disconnect', onSocketDisconnect);
+    // New socket connected, display new count on page
+    socket.on('users connected', function (data){
+        $('#connected').html('Contributeurs: ' + data);
+    })
+    socket.on("update", updateUsers);
+    socket.on("receivenotes", onReceiveNotes);
+    socket.on("displayNotes", displayNotes);
+    socket.on("listImages", listImages);
     //function initie les évènements
     initEvents();
 
     function initEvents(){
       $("#pad_perso").focus();
+      $(".session-name").append(userName);
+
+      //Send notes 
+      $("#pad_perso").keyup(function (e) {
+        if(e.keyCode == 32 || e.keyCode == 13){
+          sendNotes();
+        }
+      });
+
+      $(".finnish-ping button").on('click', function(){
+        publishPing();
+      });
 
       rechremp();
       markdownToHtml();
@@ -26,132 +49,136 @@ $(document).ready(function(){
       });
     }
 
-    var user = app.session;
-    socket.emit('nouveau_client', user);
-    id.push(user);
-
     function onSocketConnect() {
-      console.log(app.session + " is connect!");
-      connectCount ++;
-      console.log(app.ping);
-      socket.emit("padEnCours", connectCount, app.ping);
+      socket.emit("padConnect", app.ping, userName);
+      socket.emit('nouveau_client', userName);
+    };
+
+    function onSocketDisconnect() {
+      console.log(app.session + " is disconnect!");
     };
 
     function onSocketError(reason) {
       console.log('Unable to connect to server', reason);
     };
 
-    // New socket connected, display new count on page
-    socket.on('users connected', function (data){
-        $('#connected').html('Contributeurs: ' + data);
-    })
-
     // Fait apparaître son visualisateur à chaque connection de user
-    socket.on('update', function (users){
-        userList = users;
-        $('#visualisateur').empty();
-        for(var i=0; i<userList.length; i++) {
-            if(userList[i] !== user){
-                $('#visualisateur').append("<div class='pseudo'>" + userList[i] + "</div><textarea id='visu"+i+"'></textarea>");
-            }
+    function updateUsers(users){
+      console.log(users);
+      userList = users;
+      $('#visualisateur').empty();
+      for(var i=0; i<userList.length; i++) {
+        if(userList[i] !== userName){
+          $('#visualisateur').append("<div class='pseudo'>" + userList[i] + "</div><textarea id='visu"+i+"' class='visus'></textarea>");
         }
+      }
+    }
 
-    });
+    //affiche les notes de l'utilisateur dès sa connexion
+    function displayNotes(data, session){
+      console.log(session);
+      if(session == userName){
+        $("#pad_perso").val(data['text']);
+      }
+    }
+    function listImages (media, session){
+      if(session == userName){
+        
+        for (var i = 0; i < media.length; i++) {      
+          var extension = media[i].split('.').pop();
+          var identifiant =  media[i].replace("." + extension, "");
+          console.log(identifiant);
+          if(extension == "jpg"){
+            $('#river').append($('<b>').text(session), '</br><img src="http://'+host+'/en-cours/' + app.ping + '/' +media[i]+'" data-name="'+identifiant+'"><div class="comment" data-name="'+identifiant+'"></div>');
+          }
+        }
+      }
+    }
 
     // Envoie en temps réel au serveur la valeur du textarea
-    $("#pad_perso").keyup(function (e) {
-        if(e.keyCode == 32 || e.keyCode == 13){
-            //timecode pour chaque mot tapé
-            var timestamp = new Date();
-            var time = timestamp.getHours() +"-" + timestamp.getMinutes() + "-" + timestamp.getSeconds();
-            socket.emit('sendnotes', {text: $('#pad_perso').val(), user:user, time:time});
-        }
-    });
+    function sendNotes(){
+      //timecode pour chaque mot tapé
+      var timestamp = new Date();
+      var time = timestamp.getHours() +"-" + timestamp.getMinutes() + "-" + timestamp.getSeconds();
+      socket.emit('sendnotes', {ping: app.ping, text: $('#pad_perso').val(), session: userName, time:time});
+    }
 
     // Récupération de la valeur des textarea et se mettent dans le visualisateur prévu.
-    socket.on('receivenotes', function (data) {
-            if(data.user == userList[0]){
-                $('#visu0').html(data.text);
-                var textArea = $('#visu0');
-                textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
-            }
+    function onReceiveNotes(data){
+      for(i=0; i<userList.length; i++){
+        if(data.session == userList[i]){
+          $('#visu' +i).html(data.text);
+          var textArea = $('#visu' +i);
+          textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
+        }
+      }
+    }
 
-            if(data.user == userList[1]){
-                $('#visu1').html(data.text);
-                var textArea = $('#visu1');
-                textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
-            }
-
-            if(data.user == userList[2]){
-                $('#visu2').html(data.text);
-                var textArea = $('#visu2');
-                textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
-            }
-
-            if(data.user == userList[3]){
-                $('#visu3').html(data.text);
-                var textArea = $('#visu3');
-                textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
-            }
-
-            if(data.user == userList[4]){
-                $('#visu4').html(data.text);
-                var textArea = $('#visu4');
-                textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
-            }
-
-            if(data.user == userList[5]){
-                $('#visu5').html(data.text);
-                var textArea = $('#visu5');
-                textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
-            } 
-
-            if(data.user == userList[6]){
-                $('#visu6').html(data.text);
-                var textArea = $('#visu6');
-                textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
-            }
-
-            if(data.user == userList[7]){
-                $('#visu7').html(data.text);
-                var textArea = $('#visu7');
-                textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
-            }
-
-            if(data.user == userList[8]){
-                $('#visu8').html(data.text);
-                var textArea = $('#visu8');
-                textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
-            }       
-    });
+    //Publie le Ping et le termine!
+    function publishPing(){
+      socket.emit("publishPing", app.ping, userName);
+      window.location.replace('http://'+host+'/ping/' +app.ping+ '/publi');
+    }
 
     // Récupération des images
     socket.on('user image', image); //reçoit les données et affiche l'image avec la function image
-    function image (from, base64Image) {  // décode le DataURl de l'image en base64Image
-            $('#river').append($('<p>').append($('<b>').text(from), '</br><img src="' + base64Image + '"/><div class="comment"></div>'));       
-            socket.on('comment image', function (message){ //ajout des commentaires
-                //transforme les urls dans les commenataires en hyperliens
-                var str = message;       
-                var regexUrl = /^(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/;
-                if(regexUrl){
-                    str = str.replace(regexUrl, "<a href='" + message + "'target='_blank'>" + message + "</a>");
-                    $(".comment").append(str); 
-                }
-                else{   
-                    $(".comment").append(message);
-                }
-                $(".comment").addClass("commentfull");
-                $(".comment").removeClass("comment");  
-            });
-
-            var scrollImage = $('#river');
-            scrollImage.scrollTop(scrollImage[0].scrollHeight - scrollImage.height());
+    function image (data, filename) {  // décode le DataURl de l'image en base64Image
+      if(data.session != userName){
+        $('#river').append($('<p>').append($('<b>').text(data.session), '</br><img src="http://'+host+'/en-cours/' + data.ping + '/' +filename+'.jpg" data-name="'+filename+'"><div class="comment" data-name="'+filename+'"></div>'));       
+      }
+      var scrollImage = $('#river');
+      scrollImage.scrollTop(scrollImage[0].scrollHeight - scrollImage.height());
     }
 
-    function imageLocal (from, base64Image) {  // décode le DataURl de l'image en base64Image
-            $('#river').append($('<p>').append($('<b>').text(from), '</br><img src="' + base64Image + '"/>'));       
-            var scrollImage = $('#river');
-            scrollImage.scrollTop(scrollImage[0].scrollHeight - scrollImage.height());
+    function addComment(){
+      $('#river p:last-child').append('<button class="commenter">COMMENTER</button>');
+      $(".commenter").click(function(){
+        var commentImage = $(this).prev('img').attr('data-name');
+        $(this).parent().append('<input type="text" class="commentInput commentI"></input></br><input type="submit" class="commentSubmit commentI"></input> ');
+        $(this).remove();
+        $('#river .commentInput').focus();
+        $(".commentSubmit").click(function(){
+            $(this).parent().append('<div class="comment" data-name="'+commentImage+'"></div>');
+            var comment = $("input.commentInput").val();       
+            var regexUrl = /^(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/;
+            if(regexUrl){
+                str = comment.replace(regexUrl, "<a href='" + comment + "'target='_blank'>" + comment + "</a>");
+                $(".comment").append(str); 
+            }
+            else{   
+                $(".comment").append(comment);
+            }
+            $(".comment").addClass("commentfull");
+            $(".comment").removeClass("comment");
+
+            socket.emit('comment image', {text:$("input.commentInput").val(), name:commentImage, ping:app.ping, session:userName});
+            $("input.commentI").remove();
+        });
+      });
+    }  
+
+    socket.on('comment image', onNewComment); //ajout des commentaires
+    function onNewComment(data){
+      if(data.session != userName){
+        //transforme les urls dans les commentaires en hyperliens
+        var str = data.text;       
+        var regexUrl = /^(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/;
+        if(regexUrl){
+          str = str.replace(regexUrl, "<a href='" + data.text + "'target='_blank'>" + data.text + "</a>");
+          $(".comment").append(str); 
+        }
+        else{   
+            $(".comment").append(data.text);
+        }
+        $(".comment").addClass("commentfull");
+        $(".comment").removeClass("comment");
+      }  
+    }
+
+    function imageLocal (from, base64Image, imagename) {  // décode le DataURl de l'image en base64Image
+      $('#river').append($('<p>').append($('<b>').text(from), '</br><img src="' + base64Image + '" data-name ="'+imagename+'"/>'));       
+      var scrollImage = $('#river');
+      scrollImage.scrollTop(scrollImage[0].scrollHeight - scrollImage.height());
     }
 
     // Image from "Partager les images" input
@@ -199,43 +226,20 @@ $(document).ready(function(){
     });
 
     function upload(files) {
-            var f = files[0];
-            // Only process image files.
-            var reader = new FileReader();
-            // When the image is loaded,
-            reader.onload = function(evt){
-                imageLocal('moi', evt.target.result);
-                addComment();
-            socket.emit('user image', evt.target.result);
-            };
-            // Read in the image file as a data URL.
-            reader.readAsDataURL(f);            
-    }
-
-    function addComment(){
-        $('#river p:last-child').append('<button class="commenter">COMMENTER</button>');
-        $(".commenter").click(function(){
-            $(this).parent().append('<input type="text" class="commentInput commentI"></input></br><input type="submit" class="commentSubmit commentI"></input> ');
-            $(this).remove();
-            $('#river .commentInput').focus();
-            $(".commentSubmit").click(function(){
-                $(this).parent().append('<div class="comment"></div>');
-                var comment = $("input.commentInput").val();       
-                var regexUrl = /^(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/;
-                if(regexUrl){
-                    str = comment.replace(regexUrl, "<a href='" + comment + "'target='_blank'>" + comment + "</a>");
-                    $(".comment").append(str); 
-                }
-                else{   
-                    $(".comment").append(comment);
-                }
-                $(".comment").addClass("commentfull");
-                $(".comment").removeClass("comment");
-
-                socket.emit('comment image', $("input.commentInput").val());
-                $("input.commentI").remove();
-            });
-        });
+      var f = files[0];
+      // Only process image files.
+      var reader = new FileReader();
+      var currentDate =  new Date();
+      var time = currentDate.getHours() +"-" + currentDate.getMinutes() + "-" + currentDate.getSeconds();
+      var imageName = time + "_" + userName;
+      // When the image is loaded,
+      reader.onload = function(evt){
+          imageLocal('moi', evt.target.result, imageName);
+          addComment();
+      socket.emit('user image', {ping: app.ping, session: userName, file:evt.target.result, image: imageName});
+      };
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(f);            
     }
 
     function addCommentFromWeb(){
@@ -287,15 +291,6 @@ $(document).ready(function(){
         });   
 
     });
-
-
-    // $('#submiturl').click(function(){
-    //     $('<img src="'+ $("#imageurl").val() +'">').load(function() {
-    //         $($('<p>').append($('<b>').text("moi"), '</br><img src="'+ $("#imageurl").val() +'"><div class="comment"></div>')).appendTo('#river');
-    //         socket.emit('image url', $("#imageurl").val());
-    //         addComment();
-    //     });
-    // });
 });
 
 function placeCaretAtEnd(el) {
@@ -521,98 +516,108 @@ function shareUrl(){
 // Regex / abbréviations
 function rechremp() {
 
-    $('#pad_perso').keyup(function(event){
+  $('#pad_perso').keyup(function(event){
 
-        var oldtxt = $(this).val();
-        var regex = /\bbcp\b /ig;
-        var newtxt = oldtxt.replace(regex, 'beaucoup ');
-        $(this).val(newtxt);
+    var webLink = $(this).val();
+    var linkregex = /<[^>]+>/ig;
+    var checkEvent = false;
+    if(linkregex.test(webLink)){
+      var newlink = webLink.replace("<", '').replace(">", "");
+      $(this).val(newlink);
+      checkEvent = true;
+      if(checkEvent = true){
+        $("#river").append("<p><a href='"+newlink+"'>"+newlink+"</a></p>");
+      }
+    }
 
-        var oldtxt1 = $(this).val();
-        var regex1 = /\bns\b /ig;
-        var newtxt1 = oldtxt1.replace(regex1, 'nous ');
-        $(this).val(newtxt1);
+    var oldtxt = $(this).val();
+    var regex = /\bbcp\b /ig;
+    var newtxt = oldtxt.replace(regex, 'beaucoup ');
+    $(this).val(newtxt);
 
-        var oldtxt2 = $(this).val();
-        var regex2 = /\bvs\b /ig;
-        var newtxt2 = oldtxt2.replace(regex2, 'vous ');
-        $(this).val(newtxt2);
+    var oldtxt1 = $(this).val();
+    var regex1 = /\bns\b /ig;
+    var newtxt1 = oldtxt1.replace(regex1, 'nous ');
+    $(this).val(newtxt1);
 
-        var oldtxt3 = $(this).val();
-        var regex3 = /\bpr\b /ig;
-        var newtxt3 = oldtxt3.replace(regex3, 'pour ');
-        $(this).val(newtxt3);
+    var oldtxt2 = $(this).val();
+    var regex2 = /\bvs\b /ig;
+    var newtxt2 = oldtxt2.replace(regex2, 'vous ');
+    $(this).val(newtxt2);
 
-        var oldtxt4 = $(this).val();
-        var regex4 = /\btt\b /ig;
-        var newtxt4 = oldtxt4.replace(regex4, 'tout ');
-        $(this).val(newtxt4);
+    var oldtxt3 = $(this).val();
+    var regex3 = /\bpr\b /ig;
+    var newtxt3 = oldtxt3.replace(regex3, 'pour ');
+    $(this).val(newtxt3);
 
-        var oldtxt5 = $(this).val();
-        var regex5 = /\btjs\b /ig;
-        var newtxt5 = oldtxt5.replace(regex5, 'toujours ');
-        $(this).val(newtxt5);
+    var oldtxt4 = $(this).val();
+    var regex4 = /\btt\b /ig;
+    var newtxt4 = oldtxt4.replace(regex4, 'tout ');
+    $(this).val(newtxt4);
 
-        var oldtxt6 = $(this).val();
-        var regex6 = /\bpq\b /ig;
-        var newtxt6 = oldtxt6.replace(regex6, 'pourquoi ');
-        $(this).val(newtxt6);
+    var oldtxt5 = $(this).val();
+    var regex5 = /\btjs\b /ig;
+    var newtxt5 = oldtxt5.replace(regex5, 'toujours ');
+    $(this).val(newtxt5);
 
-        var oldtxt7 = $(this).val();
-        var regex7 = /\bavt\b /ig;
-        var newtxt7 = oldtxt7.replace(regex7, 'avant ');
-        $(this).val(newtxt7);
+    var oldtxt6 = $(this).val();
+    var regex6 = /\bpq\b /ig;
+    var newtxt6 = oldtxt6.replace(regex6, 'pourquoi ');
+    $(this).val(newtxt6);
 
-        var oldtxt8 = $(this).val();
-        var regex8 = /\bdt\b /ig;
-        var newtxt8 = oldtxt8.replace(regex8, 'dont ');
-        $(this).val(newtxt8);
+    var oldtxt7 = $(this).val();
+    var regex7 = /\bavt\b /ig;
+    var newtxt7 = oldtxt7.replace(regex7, 'avant ');
+    $(this).val(newtxt7);
 
-        var oldtxt9 = $(this).val();
-        var regex9 = /\bdc\b /ig;
-        var newtxt9 = oldtxt9.replace(regex9, 'donc ');
-        $(this).val(newtxt9);
+    var oldtxt8 = $(this).val();
+    var regex8 = /\bdt\b /ig;
+    var newtxt8 = oldtxt8.replace(regex8, 'dont ');
+    $(this).val(newtxt8);
 
-        var oldtxt10 = $(this).val();
-        var regex10 = /\btps\b /ig;
-        var newtxt10 = oldtxt10.replace(regex10, 'temps ');
-        $(this).val(newtxt10);
+    var oldtxt9 = $(this).val();
+    var regex9 = /\bdc\b /ig;
+    var newtxt9 = oldtxt9.replace(regex9, 'donc ');
+    $(this).val(newtxt9);
 
-        var oldtxt11 = $(this).val();
-        var regex11 = /\blgtps\b /ig;
-        var newtxt11 = oldtxt11.replace(regex11, 'longtemps ');
-        $(this).val(newtxt11);
+    var oldtxt10 = $(this).val();
+    var regex10 = /\btps\b /ig;
+    var newtxt10 = oldtxt10.replace(regex10, 'temps ');
+    $(this).val(newtxt10);
 
-        var oldtxt12 = $(this).val();
-        var regex12 = /\bdvlpt\b /ig;
-        var newtxt12 = oldtxt12.replace(regex12, 'développement ');
-        $(this).val(newtxt12);
+    var oldtxt11 = $(this).val();
+    var regex11 = /\blgtps\b /ig;
+    var newtxt11 = oldtxt11.replace(regex11, 'longtemps ');
+    $(this).val(newtxt11);
 
-        var oldtxt13 = $(this).val();
-        var regex13 = /\bpb\b /ig;
-        var newtxt13 = oldtxt13.replace(regex13, 'problème ');
-        $(this).val(newtxt13);
+    var oldtxt12 = $(this).val();
+    var regex12 = /\bdvlpt\b /ig;
+    var newtxt12 = oldtxt12.replace(regex12, 'développement ');
+    $(this).val(newtxt12);
 
-        var oldtxt14 = $(this).val();
-        var regex14 = /\brdv\b /ig;
-        var newtxt14 = oldtxt14.replace(regex14, 'rendez-vous ');
-        $(this).val(newtxt14);
+    var oldtxt13 = $(this).val();
+    var regex13 = /\bpb\b /ig;
+    var newtxt13 = oldtxt13.replace(regex13, 'problème ');
+    $(this).val(newtxt13);
 
-        var oldtxt15 = $(this).val();
-        var regex15 = /\bgvt\b /ig;
-        var newtxt15 = oldtxt15.replace(regex15, 'gouvernement ');
-        $(this).val(newtxt15);
+    var oldtxt14 = $(this).val();
+    var regex14 = /\brdv\b /ig;
+    var newtxt14 = oldtxt14.replace(regex14, 'rendez-vous ');
+    $(this).val(newtxt14);
 
-        var oldtxt16 = $(this).val();
-        var regex16 = /\bmvt\b /ig;
-        var newtxt16 = oldtxt16.replace(regex16, 'mouvement ');
-        $(this).val(newtxt16);
+    var oldtxt15 = $(this).val();
+    var regex15 = /\bgvt\b /ig;
+    var newtxt15 = oldtxt15.replace(regex15, 'gouvernement ');
+    $(this).val(newtxt15);
 
-        var oldtxt17 = $(this).val();
-        var regex17 = /\bnbx\b /ig;
-        var newtxt17 = oldtxt17.replace(regex17, 'nombreux ');
-        $(this).val(newtxt17);
+    var oldtxt16 = $(this).val();
+    var regex16 = /\bmvt\b /ig;
+    var newtxt16 = oldtxt16.replace(regex16, 'mouvement ');
+    $(this).val(newtxt16);
 
-
-    });
+    var oldtxt17 = $(this).val();
+    var regex17 = /\bnbx\b /ig;
+    var newtxt17 = oldtxt17.replace(regex17, 'nombreux ');
+    $(this).val(newtxt17);
+  });
 }

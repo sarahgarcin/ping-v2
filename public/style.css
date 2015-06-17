@@ -88,6 +88,7 @@ a:visited{
   width: 100%;
   padding: 10px 0px 0px 0px;
   border-bottom: 1px dashed #1A22FA; 
+  height: 5vw;
 }
 
 .accueil {
@@ -98,33 +99,40 @@ a:visited{
 }
 
 .conf_title{
-    font-size: 13px;
+    font-size: 1rem;
     font-family: 'ume', serif;
     color:#545454;
     letter-spacing: 1px;
     padding-left: 30px;
+    margin-bottom: 20px;
+
+
 }
 
 .title {
     font-family:monospace;
     font-size:0.3rem;
     color: #1A22FA;
-    text-align: right;
+    /*text-align: right;*/
     padding-right: 30px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+
 }
 
 .session-name{
   font-size: 1.5rem;
   position: absolute;
-  top: 30px;
+  top: 60px;
   left: 30px;
   color: #1A22FA;
 }
 
 #connected{
-  top:10px;
-  right:160px; 
-  position:fixed;
+  top:35px;
+  left:30px; 
+  position:absolute;
   font-size: 13px;
   font-family: "ume", serif;
   color:#545454;
@@ -132,15 +140,14 @@ a:visited{
 }
 
 #content {
-  width:100%; 
-  margin-top: 10px;
-  height:600px;
+  width:95%;
+  margin: 40px auto; 
 }
 
 
 #content .pad #pad_perso{
-  width:37%;
-  height:610px;
+  width:45%;
+  height:70vh;
   float:left; 
   margin-left:0px; 
   margin-top:0px;
@@ -150,10 +157,11 @@ a:visited{
   border-bottom: 1px solid #1A22FA;
   background: #FFF;
   outline:0;
-  overflow: scroll;
-  line-height: 16px;
+  overflow-y: scroll;
+  line-height: 19px;
   color:#000;
   resize: none;
+  font-size: 0.9rem;
 }
 
 #content #pad_perso .timer{
@@ -163,8 +171,8 @@ a:visited{
 
 #fake {
   display: none;
-  width:37%;
-  height:600px;
+  width:45%;
+  height:70vh;
   float:left; 
   margin-left:0px; 
   margin-top:0px;
@@ -211,8 +219,8 @@ a:visited{
 #content #previewer {
   position:absolute; 
   background:#FFF; 
-  width:32.7%;
-  height:568px;
+  width:40.5%;
+  height:65.7vh;
   float:left; 
   margin-left:0px; 
   margin-top:0px;
@@ -222,7 +230,7 @@ a:visited{
   display:none;
   padding: 20px;
   font-size: 13px;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 /* MARKDOWN STYLED */
@@ -283,22 +291,23 @@ a:visited{
 /* -------------- RIVIERE ----------------- */
 
 .common #river {
-    overflow: scroll;
-    width:20%;
-    max-width: 260px;
-    height:599px; 
-    background:#fff; 
-    float:left; 
-    border-top: 1px dotted #1A22FA;
-    border-bottom: 1px dotted #1A22FA;
-    padding-top: 10px;
-    background-image: -webkit-gradient(
-  linear,
-  left top,
-  right top,
-  color-stop(0, #FFFFFF),
-  color-stop(1, #C6C6C6)
-);
+  overflow-y: scroll;
+  width:25%;
+  max-width: 300px;
+  height:68.7vh; 
+  background:#fff;
+  padding: 40px 30px 0px 30px; 
+  float:left; 
+  border-top: 1px dotted #1A22FA;
+  border-bottom: 1px dotted #1A22FA;
+  padding-top: 10px;
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    color-stop(0, #FFFFFF),
+    color-stop(1, #C6C6C6)
+  );
 background-image: -o-linear-gradient(right, #FFFFFF 0%, #C6C6C6 100%);
 background-image: -moz-linear-gradient(right, #FFFFFF 0%, #C6C6C6 100%);
 background-image: -webkit-linear-gradient(right, #FFFFFF 0%, #C6C6C6 100%);
@@ -308,8 +317,8 @@ background-image: linear-gradient(to right, #FFFFFF 0%, #C6C6C6 100%);
 }
 
 .common #river img{
-    width:200px;
-    margin-top: 5px;
+  width:100%;
+  margin-top: 10px;
 }
 
 .common #river p{
@@ -324,7 +333,7 @@ background-image: linear-gradient(to right, #FFFFFF 0%, #C6C6C6 100%);
 
 .common #river b{
     font-family: 'ume', serif;
-    font-size: 13px;
+    font-size: 1rem;
     letter-spacing: 1px;
 }
 
@@ -347,7 +356,7 @@ div.filebutton {
   letter-spacing: 1px;
   color:#1A22FA;
   line-height: 24px;
-  margin-left: 36%;
+  margin-left: 46%;
   margin-top: -30px;
   padding: 2px 0;
   padding-left: 30px;
@@ -439,16 +448,15 @@ div.filebutton {
 }
 
 #visualisateur {
-  margin-top: -35px;
   margin-left: 60px;
   width:30%;
-  height:600px;
+  height:70vh;
   overflow: hidden;
   float: left;
 }
 
-#visualisateur #visu0, #visu1, #visu2, #visu3, #visu4, #visu5, #visu6, #visu7, #visu8 {
-  font-size: 11px;
+#visualisateur  .visus{
+  font-size: 0.9rem;
   line-height: 17px;
   letter-spacing: 0.05em;
   word-spacing: 0.05em;
@@ -458,7 +466,7 @@ div.filebutton {
   border-bottom:1px solid rgba(26, 34, 250, 0.4); 
   color:#545454;
   padding-top: 10px;
-  overflow: scroll;
+  overflow-y : scroll;
 
 }
 
@@ -467,13 +475,22 @@ div.filebutton {
 }
 
 #visualisateur .pseudo{
- font-size: 13px;
+ font-size: 1rem;
  text-decoration: underline;
  color:#545454;
  font-family: "ume", serif;
  letter-spacing: 1px;
  padding-top: 5px;
  padding-bottom: 5px;
+}
+
+.finnish-ping button{
+  text-transform: uppercase;
+  color: #FFF;
+  background-color: #1A22FA;
+  border:none;
+  cursor: pointer;
+  padding: 10px 5px;
 }
 
 /*INDEX PAGE*/
@@ -597,9 +614,31 @@ div.filebutton {
     display: inline-block;
     vertical-align: top;
   }
+  .content-admin ul {
+    padding: 0;
+  }
+  .content-admin li {
+    list-style: none;
+  }
+
+  .content-admin h3{
+    text-transform: uppercase;
+    color: #1A22FA;
+    margin-bottom: 0px;
+
+  }
+
+  .content-admin h4{
+    margin-top:3px;
+    margin-bottom: 3px;
+  }
 
   .left-myping{
     margin-top: 100px;
+  }
+
+  .last-ping{
+    margin-top: 130px;
   }
 
 /*END ADMIN PAGE*/
