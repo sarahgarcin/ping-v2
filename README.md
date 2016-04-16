@@ -1,7 +1,7 @@
-PING (PING IS NOT GOOGLEDOCS)
+PING
 ====
 
-[!Ping](logo-ping.jpg)
+![Ping](logo-ping.jpg)
 
 ## Presentation 
 
