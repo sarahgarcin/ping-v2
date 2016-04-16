@@ -19,8 +19,8 @@ The audience is not a simple consummer of a speach, but we are its co creator. W
 ### Clone the repo or download it
 To download the repository, click on the "Download zip" button on the dodoc Github page
 
-To clone the repository open the terminal and type this command
-		https://github.com/sarahgarcin/ping-v2.git
+To clone the repository open the terminal and type this command  
+			git clone https://github.com/sarahgarcin/ping-v2.git
 
 ### Install nodejs on your computer
 
