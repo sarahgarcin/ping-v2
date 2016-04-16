@@ -16,6 +16,36 @@ The audience is not a simple consummer of a speach, but we are its co creator. W
 
 ## Installing the demo
 
+### Clone the repo or download it
+To download the repository, click on the "Download zip" button on the dodoc Github page
+
+To clone the repository open the terminal and type this command
+```https://github.com/sarahgarcin/ping-v2.git``
+
+### Install nodejs on your computer
+
+You can install nodejs from this page https://nodejs.org/
+Then, verify that it is correctly installed by typing in the terminal
+```node -v``
+
+### Install dependencies
+
+In terminal go to the ping directory you have just cloned or downloaded:
+cd path/of/the/ping/directory
+
+Once you are in the right directory
+Enter the command:
+```npm install``
+
+## Run Ping in browser
+
+In the right directory
+Run the server in the terminal
+```node server.js```
+
+Go to browser and go to the url
+http://localhost:1337
+
 
 
 
