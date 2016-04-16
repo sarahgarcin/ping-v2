@@ -24,33 +24,33 @@ To clone the repository open the terminal and type this command
 
 ### Install nodejs on your computer
 
-You can install nodejs from this page https://nodejs.org/
+You can install nodejs from this page https://nodejs.org/  
 Then, verify that it is correctly installed by typing in the terminal
 `node -v`
 
 ### Install dependencies
 
-In terminal go to the ping directory you have just cloned or downloaded:
-cd path/of/the/ping/directory
+In terminal go to the ping directory you have just cloned or downloaded:  
+`cd path/of/the/ping/directory`
 
-Once you are in the right directory
+Once you are in the right directory  
 Enter the command:
-		npm install
+`npm install`
 
 ## Run Ping in browser
 
-In the right directory
-Run the server in the terminal
-		node server.js
+In the right directory  
+Run the server in the terminal  
+`node server.js`
 
-Go to browser and go to the url
+Go to browser and go to the url   
 http://localhost:1337
 
 ---
 
 ## About
 
-This project is under GNU GENERAL PUBLIC LICENSE.
+This project is under GNU GENERAL PUBLIC LICENSE.   
 Created by Sarah Garcin and Victor Lebeau
 
 
