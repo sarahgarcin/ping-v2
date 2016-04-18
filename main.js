@@ -139,7 +139,11 @@ var socketCount = 0;
 
   function listPing(session){
     var dir = "sessions/en-cours/";
-    fs.readdir(dir, function (err, files) { if (err) throw err;
+    fs.readdir(dir, function (err, files) { 
+      if (err) throw err;
+        if(dir == ".DS_Store"){
+          fs.unlink(dir+'.DS_Store');
+        }
       files.forEach( function (file) {
         files.push(file);
         var jsonFile = __dirname +'/'+ dir + file+"/"+file + ".json";
@@ -166,6 +170,9 @@ var socketCount = 0;
   function listFinnishPing(){
     var dir = "sessions/termines/";
     fs.readdir(dir, function (err, files) { if (err) throw err;
+       if(dir == ".DS_Store"){
+          fs.unlink(dir+'.DS_Store');
+        }
       files.forEach( function (file) {
         files.push(file);
         var jsonFile = __dirname +'/'+ dir + file+"/"+file + ".json";
